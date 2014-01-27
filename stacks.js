@@ -22,7 +22,7 @@ function protoStacks(){
 			}).mouseup(function(){$( this ).find('.placeholder').remove();})
 			.draggable({handle:'.stack-handle', appendTo: '.canvas', scroll:'true'})
 			.on('contextmenu', function(e, ui){
-				console.log(e.currentTarget);
+				if(logging)console.log(e.currentTarget);
 				if((!$(e.currentTarget).hasClass('stack')))return;
 				e.preventDefault();
 				$(e.currentTarget).append($('<custom-menu></custom-menu>').attr('style', 'position:fixed;z-index:99;top:' + e.clientY + ';left:'+ e.clientX + ';').html('<li is="cmenu-item" type="emulate">Emulate</li><li is="cmenu-item" type="delete">Delete</li>').disableSelection());
@@ -96,4 +96,4 @@ function protoStacks(){
 	this.fix();//fixes stacks
 	return this;
 }
-console.log('Stacks initiated');
+if(logging)console.log('Stacks initiated');

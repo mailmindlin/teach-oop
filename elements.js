@@ -2,9 +2,9 @@
 var defaults=new Array();
 defaults.stringInputValue='Enter Some Text';
 var StringInputPrototype = Object.create(HTMLElement.prototype);
-StringInputPrototype.createdCallback=function(){console.log('created');this.attributeChangedCallback()};
+StringInputPrototype.createdCallback=function(){if(logging)console.log('created');this.attributeChangedCallback()};
 StringInputPrototype.attributeChangedCallback = function() {
-	console.log('updating');
+	if(logging)console.log('updating');
 	if(typeof $(this).attr('value') !== 'undefined'){
 		this.textContent = "["+$(this).attr('value')+"]";
 	}else{
@@ -12,18 +12,18 @@ StringInputPrototype.attributeChangedCallback = function() {
 	}
 	$(this).on('click', function(){
 		if($(this).html().contains('<input')){this.a.focus();return;}
-		console.log('clicked');
+		if(logging)console.log('Event registered: string-input clicked');
   		var a=$('<input />').attr('type', 'text').attr('value', $(this).attr('value')).addClass('StringInput-tb');//create textbox
   		$(this).html('[').append(a);//insert textbox
   		$(this).html($(this).html()+']');//add ']' for l&f
   		//handles handles textboxes
   		var strInput=$('.StringInput-tb').focusout(function(){
-  			console.log('focus out');
+  			if(logging)console.log('Registered event: fosusing out of string-input textbox');
   			$(this).parent().attr('value', '')//clears the attribute, so that the attributeChangedCallback is called
   			.delay(5).attr('value', $(this).val());//sets the value to the data
   			$(this).remove();//removes self, cleans up
   		});
-  		console.log(strInput);
+  		if(logging)console.log(strInput);
   		strInput.focus();
   	});
 };
@@ -38,7 +38,7 @@ var CustomMenuPrototype = Object.create(HTMLUListElement.prototype);
 CustomMenuPrototype.createdCallback=function(){
 	$(this).menu({menus:'custom-menu'});
 	//.on('close', this.close());
-	$('body').on('click', function(e,ui){console.log('closing');$('custom-menu').delay(500).remove()});
+	$('body').on('click', function(e,ui){if(logging)console.log('closing');$('custom-menu').delay(500).remove()});
 };/*
 CustomMenuPrototype.close=function(e,ui){
 	$(this).remove();
@@ -48,7 +48,7 @@ var CustomMenuItemPrototype = Object.create(HTMLLIElement.prototype);
 CustomMenuItemPrototype.createdCallback=function(){
 	if($(this).attr('type')=='emulate'){
 		$(this).click(function(){
-			console.log('emulating');
+			if(logging)console.log('emulating');
 			var el=$(this);
 			var i=0;
 			var targClass='stack';
@@ -58,7 +58,7 @@ CustomMenuItemPrototype.createdCallback=function(){
 				if(i>5){console.log('error');return;}
 				i++;
 			}
-			console.log(el);
+			if(logging)console.log(el);
 			Emulator.emulateStack(el.data('callStr'));
 		});
 	}else if($(this).attr('type')=='delete'){
@@ -70,7 +70,7 @@ CustomMenuItemPrototype.createdCallback=function(){
 			//if((typeof $(this).attr('target') !== 'undefined')&&($(this).attr('target')!=="")){targClass=$(this).attr('target');}
 			while(! el.hasClass(targClass)){
 				el=el.parent();
-				if(i>5){console.log('error, ' + targClass);return;}
+				if(i>5){console.err('error, ' + targClass);return;}
 				i++;
 			}
 			el.remove();
@@ -78,4 +78,4 @@ CustomMenuItemPrototype.createdCallback=function(){
 	}
 }
 var CustomMenuItem=document.registerElement('cmenu-item', {prototype:CustomMenuItemPrototype});
-console.log('Elements initiated');
+if(logging)console.log('Elements initiated');

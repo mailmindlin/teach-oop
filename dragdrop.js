@@ -11,6 +11,10 @@ function load(){
 	Stack=protoStacks();
 	if(logging)console.log('done');
 }
+String.prototype.contains=function(test){return this.indexOf(test)>=0;};
+String.prototype.replaceAll=function(needle, thing){if(needle.length==0)return false;var sudoMe=this;while(sudoMe.contains(needle)){sudoMe=sudoMe.replace(needle, thing);};return sudoMe;};
+String.prototype.replaceSelf=function(needle, replacement){this=this.replace(needle, replacement);};
+function isset(thing){return typeof thing !== 'undefined';}
 //for getting positions
 function findPos(obj) {
 	var curleft = curtop = 0;

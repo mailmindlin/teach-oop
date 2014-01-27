@@ -2,11 +2,13 @@ var Emulator;
 function protoEmulator(){
 	this.emulate=function(arr){
 		for(var i=0;i<arr.length;i++){
-			Blocks.evaluate(arr[i],arr[i].htmlText);
+			console.log([arr[i], arr[i].htmlText]);
+			if(typeof arr[i] !== 'undefined')Blocks.evaluate(arr[i],arr[i].htmlText);
 		}
 	};
 	this.emulateStack=function(stackName){
 		var stack=Stack.emulatable(Stack.call(stackName));
+		console.log('emulating');
 		this.emulate(stack);
 	};	
 	this.attempt=function(fn){
@@ -26,4 +28,4 @@ function protoEmulator(){
 	return this;
 }
 Emulator=protoEmulator();
-console.log('Emulator initiated');
+if(logging)console.log('Emulator initiated');
