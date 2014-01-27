@@ -1,1 +1,13 @@
 //changelog
+VERSION [0.1.1]{
+	First version uploaded.
+	Fixed:
+	-Right-click menus
+	Bug: Custom element problem with polymer.js
+}
+VERSION [0.1.3]{
+	Works with touchscreens [Partial compatibility: allows for ts dragging]
+	Imported: jquery-ui-touch for touchscreen compatibility
+}
+VERSION [0.1.4]{
+	Better touchscreen compatibility: long press for renaming stacks.
