@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<script type="text/javascript" src="jquery-ui-1.10.3/jquery-1.9.1.js"></script>
+		<script src="jquery-ui-1.10.3/ui/jquery.ui.core.js"></script>
+		<script src="jquery-ui-1.10.3/ui/jquery.ui.widget.js"></script>
+		<script src="jquery-ui-1.10.3/ui/jquery.ui.mouse.js"></script>
+		<script src="jquery-ui-1.10.3/ui/jquery.ui.draggable.js"></script>
+		<script src="jquery-ui-1.10.3/ui/jquery.ui.droppable.js"></script>
+		<script src="jquery-ui-1.10.3/ui/jquery.ui.sortable.js"></script>
+		<script src="jquery-ui-1.10.3/ui/jquery.ui.position.js"></script>
+		<script src="jquery-ui-1.10.3/ui/jquery.ui.menu.js"></script>
+		<script type="text/javascript" src="jquery-ui-touch.js"></script>
+		<script type="text/javascript" src="dragdrop.js"></script>
+		<script type="text/javascript" src="blocks.js"></script>
+		<script type="text/javascript" src="stacks.js"></script>
+		<script type="text/javascript" src="emulator.js"></script>
+		<script type="text/javascript" src="platform.js"></script>
+		<!--<script type="text/javascript" src="loader.js"></script>
+		<script type="text/javascript" src="load.js"></script>
+		<script type="text/javascript" src="polymer-expressions.js"></script>
+		<script type="text/javascript" src="html-imports.js"></script>
+		<script type="text/javascript" src="polymer.js"></script>--!>
+		<script type="text/javascript" src="elements.js"></script>
+		<link rel="stylesheet" type="text/css" href="main.css"/>
+	</head>
+	<body onload="load()">
+		<div id="objects" style="position:fixed; top:0px; left:0px; z-index:99">
+			<ul class='stack-selectable'>
+				<li class="createStack">Create Stack</li>
+				<!--<li class="block block-inlist block-top-main">Hi</li>
+				<li class="block block-inlist block-bottom-main">Hello</li>
+				<li class="block block-inlist block-bottom-main">Sup</li>--!>
+			</ul>
+		</div>
+		<div id="canvas-main" class="canvas">
+			<!--<ul class="stack" style="top:0px;left:500px;position:fixed;"></ul>--!>
+		</div>
+		<div id="trash">
+			<img src="trash.png"/>
+		</div>
+	</body>
+</html>
