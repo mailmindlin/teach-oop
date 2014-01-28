@@ -54,7 +54,7 @@ function protoStacks(){
 				.sortable({
 					items:'li:not(.placeholder), ul.stack',
 					update: function(event, ui) {
-						console.log('DELETING BLOCK: ' + ui.item.data('name'));
+						if(logging)console.log('DELETING BLOCK: ' + ui.item.data('name'));
 						$(this).children().remove();
 					},
 					connectWith: '.stack-sortable'

@@ -9,7 +9,7 @@ function load(){
 	if(logging)console.log('Loading: Stacks');
 	$('body>div').bind('dragstart', function(e,ui){e.stopPropagation();});
 	Stack=protoStacks();
-	//load();
+	loadFromCookie();
 	if(logging)console.log('done');
 }
 String.prototype.contains=function(test){return this.indexOf(test)>=0;};
@@ -49,9 +49,15 @@ for(var i=0; i<ca.length; i++)
 return "";
 }
 function save(){
-	setCookie('SAVE1', $('.canvas').html(), 2);
+	var html=$('.canvas').html().trim().replaceAll(';', '$SEMICOLON').replaceAll(' ', '$SPACE').replaceAll("\n", '$NEWLINE').replaceAll("\t", "$TAB");
+	if(logging)console.log(html);
+	setCookie('SAVE1', html, 30);
 }
 function loadFromCookie(){
-	$('.canvas').html(getCookie('SAVE1'));
+	var html=getCookie('SAVE1').replaceAll('$SEMICOLON', ';').replaceAll('$SPACE', ' ').replaceAll("$NEWLINE", "\n").replaceAll("$TAB", "\t");
+	if(logging)console.log(html);
+	$('.canvas').html(html);
+	Blocks.draw();
+	Stack.fix();
 }
 if(logging)console.log('DragDrop initiated');

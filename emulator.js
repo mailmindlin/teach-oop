@@ -28,8 +28,10 @@ function protoEmulator(){
 	this.scope=Scope();
 	this.emulate=function(arr){
 		for(var i=0;i<arr.length;i++){
-			console.log([arr[i], arr[i].htmlText]);
-			if(typeof arr[i] !== 'undefined')Blocks.evaluate(arr[i],arr[i].htmlText);
+			if(isset(arr[i].htmlText)){
+				console.log([arr[i], arr[i].htmlText]);
+				if(typeof arr[i] !== 'undefined')Blocks.evaluate(arr[i],arr[i].htmlText);
+			}
 		}
 	};
 	this.requestVar=function(varname){

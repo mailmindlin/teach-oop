@@ -98,10 +98,10 @@ standalone:true,
 defaultClass: 'block-type-variable',
 textParser: function(block){return block.text.replace("variable @VARNAME", "<string-input value='variable' name='varname'></string-input>").replace("@VARSELECT", "<variable-selector/>").replace("value @STRING", "<string-input value='value' name='value'></string-input>");},
 paramParser: function(string){
-var regexValue=/value=["'][\w\-:]+["'](?= name=['"]value['"])/g;
-var regexVarName=/value=["'][\w\-:]+["'](?= name=['"]varname['"])/g;
-	var val=text.match(regexValue);
-	var nam=text.match(regexVarName);
+	var regexValue=/value=["'][\w\-:]+["'](?= name=['"]value['"])/g;
+	var regexVarName=/value=["'][\w\-:]+["'](?= name=['"]varname['"])/g;
+	var val=string.match(regexValue);
+	var nam=string.match(regexVarName);
 	for(key in val){
 		val[key]=val[key].substring(7, val[key].length-1);
 	}
@@ -114,5 +114,5 @@ var regexVarName=/value=["'][\w\-:]+["'](?= name=['"]varname['"])/g;
 	return arr;
 }
 });
-Blocks.registerNew({name:'varCreator', text:'Set variable @VARNAME to value @STRING', type:'variable', call:function(tparam, tp1){var a; Emulator.scope.vars[tp1['VARNAME'][0]]=tp1['VALUE'][0];}});
+Blocks.registerNew({name:'varCreator', text:'Set variable @VARNAME to value @STRING', type:'variable', call:function(tparam, tp1){Emulator.scope.vars[tp1['VARNAME'][0]]=tp1['VALUE'][0];}});
 if(logging)console.log('Blocks initiated');
