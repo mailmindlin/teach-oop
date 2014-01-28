@@ -85,3 +85,6 @@ custom-menu li:hover {
 	border-color:black;
 	border-radius:5px;
 }
+.block-type-variable {
+	background-color:#F000FC;
+}

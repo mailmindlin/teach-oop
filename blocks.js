@@ -70,7 +70,7 @@ Blocks=protoBlocks();
 function fixVal(s){
 	//fix sensors
 	var s1=s;
-	s=s.replaceAll("SGX", AccelerometerConstruct.x.toString());
+	s=s.replaceAll("SENSOR:GYRO-X", AccelerometerConstruct.x.toString());
 	s=s.replaceAll("SENSOR:GYRO-Y", AccelerometerConstruct.y.toString());
 	s=s.replaceAll("SENSOR:GYRO-Z", AccelerometerConstruct.z.toString());
 	s=s.replaceAll("SENSOR:GRAV-X", AccelerometerConstruct.xGrav.toString());
@@ -95,8 +95,24 @@ Blocks.registerType({name:'paramTester', defaultClass: 'block-type-fn', textPars
 Blocks.registerType({
 name:'variable',
 standalone:true,
-defaultClass: 'block-type-data',
-textParser: function(block){return block.text.replace("@VARNAME", "<adaptable-input type='string'/>").replace("@VARSELECT", "<variable-selector/>");},
-creator: function(block){}}
-);
+defaultClass: 'block-type-variable',
+textParser: function(block){return block.text.replace("variable @VARNAME", "<string-input value='variable' name='varname'></string-input>").replace("@VARSELECT", "<variable-selector/>").replace("value @STRING", "<string-input value='value' name='value'></string-input>");},
+paramParser: function(string){
+var regexValue=/value=["'][\w\-:]+["'](?= name=['"]value['"])/g;
+var regexVarName=/value=["'][\w\-:]+["'](?= name=['"]varname['"])/g;
+	var val=text.match(regexValue);
+	var nam=text.match(regexVarName);
+	for(key in val){
+		val[key]=val[key].substring(7, val[key].length-1);
+	}
+	for(key in nam){
+		nam[key]=nam[key].substring(7, nam[key].length-1);
+	}
+	var arr=new Array();
+	arr['VARNAME']=nam;
+	arr['VALUE']=val;
+	return arr;
+}
+});
+Blocks.registerNew({name:'varCreator', text:'Set variable @VARNAME to value @STRING', type:'variable', call:function(tparam, tp1){var a; Emulator.scope.vars[tp1['VARNAME'][0]]=tp1['VALUE'][0];}});
 if(logging)console.log('Blocks initiated');
