@@ -11,7 +11,7 @@ StringInputPrototype.attributeChangedCallback = function() {
 		$(this).attr('value', defaults.stringInputValue);//calls function again, setting the text
 	}
 	$(this).on('click', function(){
-		if($(this).html().contains('<input')){this.a.focus();return;}
+		if($(this).html().contains('<input'))return;
 		if(logging)console.log('Event registered: string-input clicked');
   		var a=$('<input />').attr('type', 'text').attr('value', $(this).attr('value')).addClass('StringInput-tb');//create textbox
   		$(this).html('[').append(a);//insert textbox
@@ -79,3 +79,38 @@ CustomMenuItemPrototype.createdCallback=function(){
 }
 var CustomMenuItem=document.registerElement('cmenu-item', {prototype:CustomMenuItemPrototype});
 if(logging)console.log('Elements initiated');
+//adaptable input
+var AdaptableInputPrototype = Object.create(HTMLElement.prototype);
+AdaptableInputPrototype.createdCallback = function() {
+	var type=$(this).attr('type');
+	if(((type!="string") && (type !="number")) && (type !="bool")){$(this).attr('type', 'string');type='string';}
+}
+AdaptableInputPrototype.attributeChangedCallback = function() {
+	if(logging)console.log('updating');
+	if(typeof $(this).attr('value') !== 'undefined'){
+		this.textContent = "["+$(this).attr('value')+"]";
+	}else{
+		$(this).attr('value', defaults.stringInputValue);//calls function again, setting the text
+	}
+	$(this).on('click', function(){
+		if($(this).html().contains('<input')){this.a.focus();return;}
+		if(logging)console.log('Event registered: string-input clicked');
+  		var a=$('<input />').attr('type', 'text').attr('value', $(this).attr('value')).addClass('StringInput-tb');//create textbox
+  		$(this).html('[').append(a);//insert textbox
+  		$(this).html($(this).html()+']');//add ']' for l&f
+  		//handles handles textboxes
+  		var strInput=$('.AdaptableInput-tb').focusout(function(){
+  			if(logging)console.log('Registered event: fosusing out of string-input textbox');
+  			var type=$(this).parent().attr('type');
+  			if(type=="number"){
+  				var pattern = /[^a-zA-Z,!@#$%\^&\*\\]/g;
+  				
+  				
+  			$(this).parent().attr('value', '')//clears the attribute, so that the attributeChangedCallback is called
+  			.delay(5).attr('value', $(this).val());//sets the value to the data
+  			$(this).remove();//removes self, cleans up
+  		}});
+  		if(logging)console.log(strInput);
+  		strInput.focus();
+  	});
+};

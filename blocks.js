@@ -18,6 +18,7 @@ function protoBlocks(){
 		}
 	};
 	this.registerNew=function(data){
+		if(!isset(data['standalone']))data['standalone']=true;
 		this.registeredBlocks.push(data);
 	};
 	this.registerType=function(data){
@@ -58,6 +59,7 @@ function protoBlocks(){
 			var obj=$('<li></li>').data('blockName', this.registeredBlocks[i].name).data("text", this.registeredBlocks[i].text).data("fn", this.registeredBlocks[i].call)
 			.html(parsedText).addClass('block').addClass('block-inlist');
 			if((hasValidType) && typeof this.registeredTypes[this.registeredBlocks[i].type].defaultClass === 'string')obj.addClass(this.registeredTypes[this.registeredBlocks[i].type].defaultClass);
+			if((hasValidType) && typeof this.registeredTypes[this.registeredBlocks[i].type].creator === 'function')obj=this.registeredTypes[this.registeredBlocks[i].type].creator(obj);
 			$('#objects ul').append(obj);
 		}
 	}
@@ -90,4 +92,11 @@ Blocks.registerType({name:'paramTester', defaultClass: 'block-type-fn', textPars
 	}
 	return fixVal(arr[0]);
 	}});
+Blocks.registerType({
+name:'variable',
+standalone:true,
+defaultClass: 'block-type-data',
+textParser: function(block){return block.text.replace("@VARNAME", "<adaptable-input type='string'/>").replace("@VARSELECT", "<variable-selector/>");},
+creator: function(block){}}
+);
 if(logging)console.log('Blocks initiated');
