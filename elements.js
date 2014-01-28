@@ -2,13 +2,31 @@
 var defaults=new Array();
 defaults.stringInputValue='Enter Some Text';
 var StringInputPrototype = Object.create(HTMLElement.prototype);
-StringInputPrototype.createdCallback=function(){if(logging)console.log('created');this.attributeChangedCallback()};
+StringInputPrototype.createdCallback=function(){
+	if(logging)console.log('created');
+	if(isset($(this).attr('accept')))$(this).droppable({
+		accept: $(this).attr('accept'),
+		drop: function(e,ui){
+			var dataType=ui.draggable.data('name');
+			var el;
+			if(isset(Data.registeredTypes[dataType])){el=Data.registeredTypes[dataType].inlineElement();}else{return;}
+			$(this).data('value', el.html());
+			$(this).attr('value', Data.registeredTypes[dataType].activeString());
+		}
+	});
+	this.attributeChangedCallback()
+};
 StringInputPrototype.attributeChangedCallback = function() {
 	if(logging)console.log('updating');
-	if(typeof $(this).attr('value') !== 'undefined'){
-		this.textContent = "["+$(this).attr('value')+"]";
+	if(isset($(this).data('value'))){
+		console.log('data');
+		this.textContent = "["+$(this).data('value')+"]";
 	}else{
-		$(this).attr('value', defaults.stringInputValue);//calls function again, setting the text
+		if(typeof $(this).attr('value') !== 'undefined'){
+			this.textContent = "["+$(this).attr('value')+"]";
+		}else{
+			$(this).attr('value', defaults.stringInputValue);//calls function again, setting the text
+		}
 	}
 	$(this).on('click', function(){
 		if($(this).html().contains('<input'))return;
@@ -35,6 +53,8 @@ var StringInput = document.registerElement('string-input', {
   prototype: StringInputPrototype
 });
 var CustomMenuPrototype = Object.create(HTMLUListElement.prototype);
+
+//custom menu
 CustomMenuPrototype.createdCallback=function(){
 	$(this).menu({menus:'custom-menu'});
 	//.on('close', this.close());
@@ -79,7 +99,8 @@ CustomMenuItemPrototype.createdCallback=function(){
 }
 var CustomMenuItem=document.registerElement('cmenu-item', {prototype:CustomMenuItemPrototype});
 if(logging)console.log('Elements initiated');
-//adaptable input
+
+//adaptable input (not yet used)
 var AdaptableInputPrototype = Object.create(HTMLElement.prototype);
 AdaptableInputPrototype.createdCallback = function() {
 	var type=$(this).attr('type');

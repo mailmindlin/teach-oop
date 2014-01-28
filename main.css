@@ -88,3 +88,8 @@ custom-menu li:hover {
 .block-type-variable {
 	background-color:#F000FC;
 }
+.data {
+	border-radius:10px;
+	background-color:#00FFFF;
+	padding-left:5px;
+}

@@ -85,7 +85,7 @@ Blocks.registerNew({name:"popupHi", text:"popup 'hi'", call:function(){alert("hi
 Blocks.registerNew({name:"logHi", text:"Log hi", call:function(){console.log('hi');}, type:'native-function'});
 Blocks.registerNew({name:"parseTest", text:"Alert @TEXTPARAM", type:'paramTester', call:function(tparam, tp1){alert(tp1);}});
 Blocks.registerType({name:'paramTester', defaultClass: 'block-type-fn', textParser: function(block){return block.text.replace("@TEXTPARAM", "<string-input/>");}, paramParser:function(text){
-	var regex=/value="[\w\s-:]+"/g;
+	var regex=/value=["'][\w\s-:\.,!@#]+["']/g;
 	var arr=text.match(regex);
 	for(key in arr){
 		arr[key]=arr[key].substring(7, arr[key].length-1);
@@ -98,8 +98,8 @@ standalone:true,
 defaultClass: 'block-type-variable',
 textParser: function(block){return block.text.replace("variable @VARNAME", "<string-input value='variable' name='varname'></string-input>").replace("@VARSELECT", "<variable-selector/>").replace("value @STRING", "<string-input value='value' name='value'></string-input>");},
 paramParser: function(string){
-	var regexValue=/value=["'][\w\-:]+["'](?= name=['"]value['"])/g;
-	var regexVarName=/value=["'][\w\-:]+["'](?= name=['"]varname['"])/g;
+	var regexValue=/value=["'][\w\s-:\.,!@#]+["'](?= name=['"]value['"])/g;
+	var regexVarName=/value=["'][\w\s-:\.,!@#]+["'](?= name=['"]varname['"])/g;
 	var val=string.match(regexValue);
 	var nam=string.match(regexVarName);
 	for(key in val){
