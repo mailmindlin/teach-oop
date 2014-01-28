@@ -25,7 +25,7 @@ The following libraries are used in teach-oop, and they are what makes this proj
 <li><a href="http://www.scriptcam.com/">ScriptCam</a></li>
 <li><a href="https://github.com/dotmaster/Touchable-jQuery-Plugin">JQueryTouchable</a></li>
 <li><a href="http://touchpunch.furf.com/">jQuery UI Touch Punch</a></li>
-<li><a href="http://www.polymer-project.org/">Polymer js</a></li>
+<li><a href="http://www.polymer-project.org/">Polymer JS</a></li>
 <li><a href="http://jqueryui.com/">jQuery UI</a></li>
 <li><a href="http://jquery.com/">jQuery</a></li>
 </ul>
