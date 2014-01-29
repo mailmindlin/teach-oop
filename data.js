@@ -13,7 +13,7 @@ function DataConstructor(){
 	}
 	this.refresh=function(){
 		$('#objects ul .data').remove();
-		this.dataTypes.forEach(this.draw());
+		this.dataTypes.forEach(this.draw);
 		$('.data').draggable().draggable();
 	};
 	return this;
