@@ -1,9 +1,10 @@
 var Blocks;
 function protoBlocks(){
-	this.registeredBlocks=new Array();
-	this.registeredTypes=new Array();
-	this.metaTypes=new Array();
-	this.init=function(){
+	var blocks=new Object();
+	blocks.registeredBlocks=new Array();
+	blocks.registeredTypes=new Array();
+	blocks.metaTypes=new Array();
+	blocks.init=function(){
 		//this.metaTypes['fn']={name='fn'};
 		//this.metaTypes[''];
 		for(var i=0;i<this.registeredBlocks.length;i++){
@@ -17,14 +18,14 @@ function protoBlocks(){
 			$('#objects ul').append(obj);
 		}
 	};
-	this.registerNew=function(data){
+	blocks.registerNew=function(data){
 		if(!isset(data['standalone']))data['standalone']=true;
-		this.registeredBlocks.push(data);
+		blocks.registeredBlocks.push(data);
 	};
-	this.registerType=function(data){
-		this.registeredTypes[data.name]=data;
+	blocks.registerType=function(data){
+		blocks.registeredTypes[data.name]=data;
 	}
-	this.evaluate=function(name, text){
+	blocks.evaluate=function(name, text){
 		if(typeof name === 'string'){
 			var b=this.getBlock(name);
 			if(b!=false){return b.call(text);}
@@ -37,19 +38,19 @@ function protoBlocks(){
 			}
 		}
 	};
-	this.getType=function(block){
+	blocks.getType=function(block){
 		var type=this.registeredTypes[block.type];
 		return isset(type) ? type : 'NONE';//I use ternary operators because im awesome like that
 	};
-	this.getBlock=function(name){
+	blocks.getBlock=function(name){
 		for(var i=0;i<this.registeredBlocks.length;i++){
-			if(this.registeredBlocks[i].name==name){
-				return this.registeredBlocks[i];
+			if(blocks.registeredBlocks[i].name==name){
+				return blocks.registeredBlocks[i];
 			}
 		}
 		return false;
 	};
-	this.draw=function(){
+	blocks.draw=function(){
 		$('#objects ul .block').remove();
 		for(var i=0;i<this.registeredBlocks.length;i++){
 			var parsedText=this.registeredBlocks[i].text;
@@ -63,7 +64,7 @@ function protoBlocks(){
 			$('#objects ul').append(obj);
 		}
 	}
-	return this;
+	return blocks;
 }
 Blocks=protoBlocks();
 //parses complex inputs
@@ -92,10 +93,7 @@ Blocks.registerType({name:'paramTester', defaultClass: 'block-type-fn', textPars
 	}
 	return fixVal(arr[0]);
 	}});
-Blocks.registerType({
-name:'variable',
-standalone:true,
-defaultClass: 'block-type-variable',
+Blocks.registerType({name:'variable', standalone:true, defaultClass: 'block-type-variable',
 textParser: function(block){return block.text.replace("variable @VARNAME", "<string-input value='variable' name='varname'></string-input>").replace("@VARSELECT", "<variable-selector/>").replace("value @STRING", "<string-input value='value' name='value'></string-input>");},
 paramParser: function(string){
 	var regexValue=/value=["'][\w\s-:\.,!@#]+["'](?= name=['"]value['"])/g;
@@ -115,4 +113,8 @@ paramParser: function(string){
 }
 });
 Blocks.registerNew({name:'varCreator', text:'Set variable @VARNAME to value @STRING', type:'variable', call:function(tparam, tp1){Emulator.scope.vars[tp1['VARNAME'][0]]=tp1['VALUE'][0];}});
+//camera blocks
+Blocks.registerType({name:"camera", defaultClass: 'block-type-camera'});
+Blocks.registerNew({name:"cameraInitiator", text:"start camera", type:'camera', call: function(){ Camera.init();}});
+Blocks.registerNew({name:"html5CameraStart", text:"Start camera with HTML5", type:'camera', call: function(){ webcam.init(); }});
 if(logging)console.log('Blocks initiated');

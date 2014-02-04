@@ -53,7 +53,7 @@
 	min-height:100%;
 	top:0px;left:0px;
 	position:absolute;
-	z-index:0;
+	z-index:5;
 	overflow:auto;
 }
 #objects li {
@@ -92,4 +92,20 @@ custom-menu li:hover {
 	border-radius:10px;
 	background-color:#00FFFF;
 	padding-left:5px;
+}
+.block-type-camera {
+	background-color:#FF0040;
+}
+#webcam-ask {
+	z-index: 1000;
+}
+#webcam-hide {
+opacity:0.0;
+filter:alpha(opacity=0);
+}
+#webcam-dialog {
+background-color:#DDDDDD;
+min-width:100px;
+min-height:100px;
+z-index:999;
 }
