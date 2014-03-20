@@ -1,16 +1,20 @@
 var logging=false;
 function load(){
+	$('.bModal').remove();
+	$('#visas_style_div').remove();
 	if(logging)console.log('Loading: Blocks');
 	Blocks.init();
 	if(logging)console.log('Loading: internal');
 	//$('.block-inlist').draggable({helper:'clone', appendTo:'body'}).disableSelection();
-	$('#objects ul').sortable({connectWith: '.stack-sortable', remove:function(){Blocks.draw();Data.refresh();}});
+	$('#objects ul').sortable({connectWith: '.stack-sortable', revert:100, remove:function(){Blocks.draw();Data.refresh();}});
 	$('.createStack').draggable({helper:'clone', appendTo: '.canvas', stop: createStack}).disableSelection();
 	if(logging)console.log('Loading: Stacks');
 	$('body>div').bind('dragstart', function(e,ui){e.stopPropagation();});
 	Stack=protoStacks();
 	Data.refresh();
 	loadFromCookie();
+	$('.bModal').remove();
+	$('#visas_style_div').remove();
 	if(logging)console.log('done');
 }
 String.prototype.contains=function(test){return this.indexOf(test)>=0;};
@@ -51,6 +55,7 @@ return "";
 }
 function save(){
 	var html=$('.canvas').html().trim().replaceAll(';', '$SEMICOLON').replaceAll(' ', '$SPACE').replaceAll("\n", '$NEWLINE').replaceAll("\t", "$TAB");
+	
 	if(logging)console.log(html);
 	setCookie('SAVE1', html, 30);
 }
@@ -60,5 +65,8 @@ function loadFromCookie(){
 	$('.canvas').html(html);
 	Blocks.draw();
 	Stack.fix();
+}
+function clear(){
+	setCookie('SAVE1','',30);
 }
 if(logging)console.log('DragDrop initiated');

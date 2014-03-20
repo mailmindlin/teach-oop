@@ -359,7 +359,11 @@
 .ui-icon-grip-solid-horizontal { background-position: -48px -224px; }
 .ui-icon-gripsmall-diagonal-se { background-position: -64px -224px; }
 .ui-icon-grip-diagonal-se { background-position: -80px -224px; }
-
+//custom icons
+.ui-icon-circle-plus-thick { background-image: url(../../../img/ICON-plus-thick.ico); }
+.ui-icon-circle-plus-thin { background-image: url(../../../img/ICON-plus-thin.ico); }
+.ui-icon-circle-minus-thick { background-image: url(../../../img/ICON-minus-thick.ico); }
+.ui-icon-circle-minus-thin { background-image: url(../../../img/ICON-minus-thin.ico;) }
 
 /* Misc visuals
 ----------------------------------*/

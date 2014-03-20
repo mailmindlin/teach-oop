@@ -1,6 +1,6 @@
 .block {
 	background:yellow;
-	max-height:50px;
+	/*max-height:50px;*/
 	border:5px;
 	border-color:red;
 	max-width:300px;
@@ -62,28 +62,51 @@
 	border-color:orange;
 }
 custom-menu {
-list-style-type:none;list-style-position:inside;padding: 0;z-index:99;
-background:white;border-style:solid;border-width:1px;border-radius:5px;min-width:100px;padding-right:5px;
+	list-style-type:none;
+	list-style-position:inside;
+	z-index:99;
+	background:white;
+	border-style:solid;
+	border-width:1px;
+	border-radius:5px;
+	border-color:grey;
+	min-width:100px;
+	padding-left:-5px;
+	margin-left:0px;
+	font-size:14px;
+	padding-right:500px;
 }
-custom-menu li {
-	padding-left:5px;
+custom-menu li, cmenu-item {
 	width:100%;
 	border-width:1px;
 	border-color:white;
 	border-style:solid;
 	border-top-color:black;
+	border-left-color:black;
+	font-size:14px;
+	position:relative;
+	left:-3px;
+	top:-3px;
+	padding:0px;
+	margin:0px;
+	padding-right:5px;
 }
-custom-menu li:last-child {
+custom-menu li:last-child, cmenu-item:last-child {
 	border-bottom-left-radius:5px;
 	border-bottom-right-radius:5px;
+	margin-bottom:-6px;
+	border-bottom-color:grey;
 }
-custom-menu li:first-child {
+custom-menu li:first-child, cmenu-item:first-child {
 	border-top-left-radius:5px;
 	border-top-right-radius:5px;
 }
-custom-menu li:hover {
+custom-menu li:hover, cmenu-item:hover {
 	border-color:black;
 	border-radius:5px;
+}
+cmenu-item {
+	display:list-item;
 }
 .block-type-variable {
 	background-color:#F000FC;
@@ -93,7 +116,7 @@ custom-menu li:hover {
 	background-color:#00FFFF;
 	padding-left:5px;
 }
-.block-type-camera {
+.block-type-camera, .camera {
 	background-color:#FF0040;
 }
 #webcam-ask {
@@ -108,4 +131,17 @@ background-color:#DDDDDD;
 min-width:100px;
 min-height:100px;
 z-index:999;
+}
+.hide {
+	z-index:9999;
+	opacity:0;
+}
+#window {
+	x-index:9999;
+	opacity:1;
+	width:300px;
+	height:300px;
+	border-width: 1px;
+	border-color: black;
+	border-radius: 5px;
 }

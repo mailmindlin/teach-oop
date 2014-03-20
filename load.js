@@ -16,9 +16,10 @@
   var thisFile = 'load.js';
   var libLocation = '';
 
-  function write(inSrc) {
+  function write(inSrc, type) {
   console.log(inSrc);
-    document.write('<script src="' + libLocation + inSrc + '"></script>');
+  	if(!isset(type)){type="text/javascript";}
+    document.write('<script src="' + inSrc + '"></script>');
   }
 
   var script = document.querySelector('script[src*="' + thisFile + '"]');

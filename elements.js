@@ -28,6 +28,9 @@ StringInputPrototype.attributeChangedCallback = function() {
 			$(this).attr('value', defaults.stringInputValue);//calls function again, setting the text
 		}
 	}
+	if(isset($(this).attr('data-accept'))){
+		$(this).droppable();
+	}
 	$(this).on('click', function(){
 		if($(this).html().contains('<input'))return;
 		if(logging)console.log('Event registered: string-input clicked');
@@ -105,6 +108,7 @@ var AdaptableInputPrototype = Object.create(HTMLElement.prototype);
 AdaptableInputPrototype.createdCallback = function() {
 	var type=$(this).attr('type');
 	if(((type!="string") && (type !="number")) && (type !="bool")){$(this).attr('type', 'string');type='string';}
+	//$('adaptable-input'
 }
 AdaptableInputPrototype.attributeChangedCallback = function() {
 	if(logging)console.log('updating');

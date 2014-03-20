@@ -30,9 +30,19 @@ function protoEmulator(){
 		for(var i=0;i<arr.length;i++){
 			if(isset(arr[i].htmlText)){
 				console.log([arr[i], arr[i].htmlText]);
-				if(typeof arr[i] !== 'undefined')Blocks.evaluate(arr[i],arr[i].htmlText);
+				if(typeof arr[i] !== 'undefined'){
+					var r=Blocks.evaluate(arr[i],arr[i].htmlText,arr,i);
+					if(r==="cancel-execution")return;
+				}
 			}
 		}
+	};
+	this.getShiftedEmulatable=function(emulatable, shift){
+		var arr={};
+		for(var i=shift;i<emulatable.length;i++){
+			arr[i-shift]=emulatable[i];
+		}
+		return arr;
 	};
 	this.requestVar=function(varname){
 		return Variable(this.scope.getVar(varname));

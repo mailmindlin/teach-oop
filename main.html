@@ -22,13 +22,15 @@
 		<script language="JavaScript" src="https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
 		<script language="JavaScript" src="ScriptCam-master/scriptcam.js"></script>
 		<script type="text/javascript" src="sensors/camera.js"></script>
-		<script type="text/javascript" src="webcam.js"></script>
+		<script type="text/javascript" src="sensors/webcam.js"></script>
+		<script type="text/javascript" src="window.js"></script>
 		<link rel="stylesheet" href="jquery-ui-1.10.3/themes/base/jquery-ui.css">
 		<title>Teach-OOP</title>
 		<script type="text/javascript" src="elements.js"></script>
 		<link rel="stylesheet" type="text/css" href="main.css"/>
 	</head>
 	<body onload="load()">
+		<video autoplay class='hide' id='webcamVideo'></video>
 		<div id="objects" style="position:fixed; top:0px; left:0px; z-index:99">
 			<ul class='stack-selectable'>
 				<li class="createStack">Create Stack</li>
@@ -38,6 +40,19 @@
 			</ul>
 		</div>
 		<div id="canvas-main" class="canvas">
+			<noscript>
+    			<center>Sorry, but it looks like JavaScript is disabled. If you see this, wait a second for your page to load.</br/>
+    			Unfortunately for you, your browser doesn't support javascript.</br/>
+    			To unlock the amazingness of teach-oop, please update your browser/firmware or switch to <a href="https://www.google.com/chrome">Google Chrome</a><br/>
+    			or <a href="http://support.apple.com/kb/dl1531">Apple Safari</a>. <small>Note that Mindlin Computing nor any of its affiliates are associated with Google Chrome</br/>
+    			or Apple Safari. Apple Safari and Google Chrome are the intelectual properties of Apple and Google (respectively), and their names and/or symbols or other</br/>
+    			related intelectual property are posessed by Apple or Google. Mindlin Computing and its affiliates (from now on referenced as "we" or "us") do not in any way endorse these products, nor do</br/>
+    			we vouch for merits, features (stated or implied) or safety. Mindlin Computing is not responsible for any damage to the maximum extent permittable by law.</br/>
+    			Any persons that take legal action(s) against us agree that they have read this disclaimer, and that any and all legal fees incurred as a result of such legal actions will be payed by the<br/>
+    			the initator(s) of said legal actions. If you do not agree to any or all of these conditions, please remove all traces of Mindlin Computing's software and/or intellectual property.<br/>
+    			If you do not do so, you agree to the above.</small>
+    			<meta HTTP-EQUIV="REFRESH" content="0; url=http://mindlin.comlu.com"> 
+    		</noscript>
 			<!--<ul class="stack" style="top:0px;left:500px;position:fixed;"></ul>--!>
 		</div>
 		<div id="trash">

@@ -25,16 +25,16 @@ function protoBlocks(){
 	blocks.registerType=function(data){
 		blocks.registeredTypes[data.name]=data;
 	}
-	blocks.evaluate=function(name, text){
+	blocks.evaluate=function(name, text,emulatable,index){
 		if(typeof name === 'string'){
 			var b=this.getBlock(name);
-			if(b!=false){return b.call(text);}
+			if(b!=false){return b.call(text,null,emulatable,index);}
 		}else{
 			var type=this.getType(name);
 			if(type !== 'NONE' && (typeof type.paramParser === 'function')){
-				return name.call(text, type.paramParser(text));
+				return name.call(text, type.paramParser(text),emulatable,index);
 			}else{
-				return name.call(text);
+				return name.call(text,null,emulatable,index);
 			}
 		}
 	};
@@ -63,7 +63,9 @@ function protoBlocks(){
 			if((hasValidType) && typeof this.registeredTypes[this.registeredBlocks[i].type].creator === 'function')obj=this.registeredTypes[this.registeredBlocks[i].type].creator(obj);
 			$('#objects ul').append(obj);
 		}
-	}
+		Data.draw();
+		//$('.block').draggable({connectToSortable:'.stack',revert:"invalid", stop:this.draw});
+	};
 	return blocks;
 }
 Blocks=protoBlocks();
@@ -80,7 +82,15 @@ function fixVal(s){
 	if(logging)console.log([s1,s]);
 	return s;
 }
-//start defining stuff
+/*
+Block/type definitions:
+Types:
+	required fields: (String)name
+	optional fields: (String)defaultClass, (function)textParser, (function)paramParser, (boolean)standalone
+Blocks:
+	required fields: (String)name, (String)text, (function)call
+	optional fields: (String)type
+*/
 Blocks.registerType({name:'native-function', defaultClass: 'block-type-fn'});
 Blocks.registerNew({name:"popupHi", text:"popup 'hi'", call:function(){alert("hi");}, type:'native-function'});
 Blocks.registerNew({name:"logHi", text:"Log hi", call:function(){console.log('hi');}, type:'native-function'});
@@ -117,4 +127,7 @@ Blocks.registerNew({name:'varCreator', text:'Set variable @VARNAME to value @STR
 Blocks.registerType({name:"camera", defaultClass: 'block-type-camera'});
 Blocks.registerNew({name:"cameraInitiator", text:"start camera", type:'camera', call: function(){ Camera.init();}});
 Blocks.registerNew({name:"html5CameraStart", text:"Start camera with HTML5", type:'camera', call: function(){ webcam.init(); }});
+Blocks.registerNew({name:"callFn", text:"Call @TEXTPARAM", type:'paramTester', call: function(tparam,tp1){ Emulator.emulateStack(tp1);}});
+Blocks.registerNew({name:"stop",text:"Stop",type:"native-function",call:function(){return 'cancel-execution';}});
+Blocks.registerNew({name:"delay",text:"wait for @TEXTPARAM seconds",type:'paramTester',call: function(a,b,e,i){var f=Emulator.getShiftedEmulatable(e,parseInt(i));setInterval(function(){Emulator.emulate(f);},parseInt(i));return 'cancel-execution';}});
 if(logging)console.log('Blocks initiated');

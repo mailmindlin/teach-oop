@@ -1,7 +1,8 @@
 var Stack;
 function protoStacks(){
-	this.stacks=$('.stack');
-	this.fix=function(){
+	var stack=new Object();
+	stack.stacks=$('.stack');
+	stack.fix=function(){
 		for(var i=0;i<$('.stack').length;i++){
 			if($('.stack').eq(i).find('ul').length<1){
 				$('.stack').eq(i).append($('<ul></ul>'));
@@ -9,6 +10,7 @@ function protoStacks(){
 		}
 		$( ".stack" ).sortable({
 				items: "li:not(.placeholder)",
+				revert: 100,
 				sort: function() {
 					// gets added unintentionally by droppable interacting with sortable
 					// using connectWithSortable fixes this, but doesn't allow you to customize active/hoverClass options
@@ -25,7 +27,11 @@ function protoStacks(){
 				if(logging)console.log(e.currentTarget);
 				if((!$(e.currentTarget).hasClass('stack')))return;
 				e.preventDefault();
-				$(e.currentTarget).append($('<custom-menu></custom-menu>').attr('style', 'position:fixed;z-index:99;top:' + e.clientY + ';left:'+ e.clientX + ';').html('<li is="cmenu-item" type="emulate">Emulate</li><li is="cmenu-item" type="delete">Delete</li>').disableSelection());
+				$(e.currentTarget).append($('<custom-menu></custom-menu>').attr('style', 'position:fixed;z-index:99;top:' + e.clientY + ';left:'+ e.clientX + ';').html('<cmenu-item is="li" type="emulate">Emulate</cmenu-item><cmenu-item type="delete">Delete</cmenu-item>').disableSelection());
+			}).accordion({
+				collapsable: true,
+				heightStyle: "content",
+				icons: {header: "ui-icon-circle-plus-thick", activeHeader: "ui-icon-circle-minus-thick"}
 			});
 			//attaches stuff to handle
 			$('.stack-handle').dblclick(function(ev, ui){
@@ -62,7 +68,7 @@ function protoStacks(){
 			}
 		return this;
 	};
-	this.create=function(px,py,top,callString){
+	stack.create=function(px,py,top,callString){
 		var stack=$('<ul></ul>').addClass('stack').addClass('stack-sortable')
 			.attr('style', 'position:fixed;top:'+ py + 'px;left:'+px+'px;')
 			.data('callStr', callString);
@@ -71,11 +77,11 @@ function protoStacks(){
 		Stack.fix();
 		return stack;
 	};
-	this.update=function(){
+	stack.update=function(){
 		this.stacks=$('.stack');
 		return this;
 	};
-	this.call=function(string){
+	stack.call=function(string){
 		for(var i=0;i<this.update().stacks.length;i++){
 			if($('.stack').eq(i).data('callStr')==string){
 				return $('.stack').eq(i);
@@ -83,7 +89,7 @@ function protoStacks(){
 		}
 		return false;
 	}
-	this.emulatable=function(stack){
+	stack.emulatable=function(stack){
 		var arr=new Array();
 		var ars=stack.find('li:not(.placeholder)');
 		for(var i=0;i<ars.length;i++){
@@ -93,7 +99,7 @@ function protoStacks(){
 		}
 		return arr;
 	}
-	this.fix();//fixes stacks
-	return this;
+	stack.fix();//fixes stacks
+	return stack;
 }
 if(logging)console.log('Stacks initiated');
