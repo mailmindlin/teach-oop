@@ -1,0 +1,24 @@
+/*doc.txt
+This document *should* document all of the other functions/paths/vars in the rest of the project. Note that this does NOT
+include anything in /ScriptCam-master/, because I didn't write that.
+
+blocks.js:
+	[VAR]Blocks:
+		This is the main block object.
+		Constructor: blocks.js ->protoBlocks()
+	[FN]protoBlocks():
+		Constructor for Blocks.
+		It returns an object with the following methods/variables:
+			[VAR]registeredBlocks:
+				All of the blocks that are registered. See [FN]registerNew
+				Array
+			[VAR]registeredTypes:
+				All of the types that are registered. See [FN]registerType
+				Array
+			[VAR]metaTypes:
+				TODO I don't remember what this does, but I think it's important.
+				Array
+			[FN]init:
+				Initializes the object.
+
+*/

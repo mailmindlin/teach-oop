@@ -1,7 +1,9 @@
 var Blocks;
 function protoBlocks(){
 	var blocks=new Object();
+	//array of registered blocks
 	blocks.registeredBlocks=new Array();
+	//array of registered types
 	blocks.registeredTypes=new Array();
 	blocks.metaTypes=new Array();
 	blocks.init=function(){
@@ -18,14 +20,19 @@ function protoBlocks(){
 			$('#objects ul').append(obj);
 		}
 	};
+	//registers a new block
 	blocks.registerNew=function(data){
+		//this is important. Note: find out why
 		if(!isset(data['standalone']))data['standalone']=true;
+		//store it
 		blocks.registeredBlocks.push(data);
 	};
+	//registers a new block type. Stores it in blocks.registeredTypes, under key=type name.
 	blocks.registerType=function(data){
 		blocks.registeredTypes[data.name]=data;
 	}
-	blocks.evaluate=function(name, text,emulatable,index){
+	//evaluates the block (executes the block function, and returns whatever the function did.
+	blocks.evaluate=function(name, text, emulatable, index){
 		if(typeof name === 'string'){
 			var b=this.getBlock(name);
 			if(b!=false){return b.call(text,null,emulatable,index);}
@@ -50,6 +57,9 @@ function protoBlocks(){
 		}
 		return false;
 	};
+	/**
+		Draws a list of all blocks in the objects list. Also calls Data.draw()
+	*/
 	blocks.draw=function(){
 		$('#objects ul .block').remove();
 		for(var i=0;i<this.registeredBlocks.length;i++){
@@ -69,7 +79,8 @@ function protoBlocks(){
 	return blocks;
 }
 Blocks=protoBlocks();
-//parses complex inputs
+//parses complex inputs.
+//Basically fixes sensor references 
 function fixVal(s){
 	//fix sensors
 	var s1=s;
@@ -79,7 +90,7 @@ function fixVal(s){
 	s=s.replaceAll("SENSOR:GRAV-X", AccelerometerConstruct.xGrav.toString());
 	s=s.replaceAll("SENSOR:GRAV-Y", AccelerometerConstruct.yGrav.toString());
 	s=s.replaceAll("SENSOR:GRAV-Z", AccelerometerConstruct.zGrav.toString());
-	if(logging)console.log([s1,s]);
+	if(logging==true||logging>=1)console.log([s1,s]);
 	return s;
 }
 /*
@@ -89,7 +100,7 @@ Types:
 	optional fields: (String)defaultClass, (function)textParser, (function)paramParser, (boolean)standalone
 Blocks:
 	required fields: (String)name, (String)text, (function)call
-	optional fields: (String)type
+	optional fields: (String)type, (String)desc
 */
 Blocks.registerType({name:'native-function', defaultClass: 'block-type-fn'});
 Blocks.registerNew({name:"popupHi", text:"popup 'hi'", call:function(){alert("hi");}, type:'native-function'});
@@ -128,6 +139,7 @@ Blocks.registerType({name:"camera", defaultClass: 'block-type-camera'});
 Blocks.registerNew({name:"cameraInitiator", text:"start camera", type:'camera', call: function(){ Camera.init();}});
 Blocks.registerNew({name:"html5CameraStart", text:"Start camera with HTML5", type:'camera', call: function(){ webcam.init(); }});
 Blocks.registerNew({name:"callFn", text:"Call @TEXTPARAM", type:'paramTester', call: function(tparam,tp1){ Emulator.emulateStack(tp1);}});
-Blocks.registerNew({name:"stop",text:"Stop",type:"native-function",call:function(){return 'cancel-execution';}});
-Blocks.registerNew({name:"delay",text:"wait for @TEXTPARAM seconds",type:'paramTester',call: function(a,b,e,i){var f=Emulator.getShiftedEmulatable(e,parseInt(i));setInterval(function(){Emulator.emulate(f);},parseInt(i));return 'cancel-execution';}});
+Blocks.registerNew({name:"stop",text:"Stop",type:"native-function",call:function(){return 'cancel-execution';}, desc="Stops the execution of the stack."});
+Blocks.registerNew({name:"delay",text:"wait for @TEXTPARAM seconds",type:'paramTester',call: function(a,b,e,i){var f=Emulator.getShiftedEmulatable(e,parseInt(i));setInterval(function(){Emulator.emulate(f);},parseInt(i));return 'cancel-execution';}, desc="Pauses stack emulation for the given number of seconds."});
+Blocks.registerNew({name:"save_var",text:"save @VARNAME as @STRING",type:'variable',call:function(tparam, tp1){setCookie(tp1['VALUE'][0],Emulator.scope.vars[tp1['VARNAME'][0]],90)},desc="Saves the given variable under a cookie with the given name."});
 if(logging)console.log('Blocks initiated');
