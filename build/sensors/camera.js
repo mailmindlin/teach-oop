@@ -29,7 +29,7 @@ function cameraConstructor(){
 	//draws a base64 string to a canvas
 	camera.draw64ToCanvas=function (string64, canvas){
 		var img=new Image();
-		img.src="data:image/  png;base64,"+string64;
+		img.src="data:image/png;base64,"+string64;
 		var ctx=canvas.getContext('2d');
 		img.onload=function(){
 			ctx.drawImage(img, 0,0);

@@ -1,6 +1,5 @@
-var Stack;
 function protoStacks(){
-	var stack=new Object();
+	var stack=Object.create();
 	stack.stacks=$('.stack');
 	stack.fix=function(){
 		for(var i=0;i<$('.stack').length;i++){
@@ -102,4 +101,5 @@ function protoStacks(){
 	stack.fix();//fixes stacks
 	return stack;
 }
+window['Stack']=protoStacks();
 if(logging)console.log('Stacks initiated');

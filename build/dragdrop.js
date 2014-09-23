@@ -10,7 +10,7 @@ function load(){
 	$('.createStack').draggable({helper:'clone', appendTo: '.canvas', stop: createStack}).disableSelection();
 	if(logging)console.log('Loading: Stacks');
 	$('body>div').bind('dragstart', function(e,ui){e.stopPropagation();});
-	Stack=protoStacks();
+	window['Stack']=protoStacks();
 	Data.refresh();
 	loadFromCookie();
 	$('.bModal').remove();

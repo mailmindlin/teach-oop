@@ -1,75 +1,82 @@
-var Emulator;
-function Scope(scope){
-	this.vars=isset(scope) ? scope.vars : new Array();//another ternary operator FOR THE WIN
-	this.getVar=function(varname){
-		if(isset(this.vars[varname]))return this.vars[varname];
-		console.err('Something was looking for variable ' + varname + ", and it didn't exist!");
-		return false;
-	};
-	return this;
-}
-function Variable(data){
-	this.data=data;
-	this.defaultNull=false;
-	if(typeof data === 'string'){this.defaultNull="";}
-	else if(typeof data === "number"){this.defaultNull=0;}
-	this.getType=function(){
-		return typeof(this.data);
-	};
-	this.setTo=function(data){
-		this.data=data;
-	};
-	this.getVal=function(){
-		return isset(this.data) ? this.data : this.defaultNull;
+{
+	if(window['c']===void 0)window['c']=Object.create(null);
+	function isset(o){return void(0)!==o;}
+	window['Scope']=function(scope){
+		var self = Object.create(null);
+		self.vars=isset(scope) ? scope.vars : new Array();//another ternary operator FOR THE WIN
+		self['getVar']=function(varname){
+			if(isset(self.vars[varname]))return self.vars[varname];
+			console.err('Something was looking for variable ' + varname + ", and it didn't exist!");
+			return false;
+		};
+		return self;
 	}
-	return this;
-}
-function protoEmulator(){
-	this.scope=Scope();
-	this.emulate=function(arr){
-		for(var i=0;i<arr.length;i++){
-			if(isset(arr[i].htmlText)){
-				console.log([arr[i], arr[i].htmlText]);
-				if(typeof arr[i] !== 'undefined'){
-					var r=Blocks.evaluate(arr[i],arr[i].htmlText,arr,i);
+	window['Variable']=function(data){
+		var self = Object.create(null);
+		self.data=data;
+		self.defaultNull=false;
+		if(typeof data === 'string')
+			self.defaultNull='';
+		else if(typeof data === 'number')
+			self.defaultNull=0;
+		self['getType']=function(){
+			return typeof(self.data);
+		};
+		self['setTo']=function(data){
+			self.data=data;
+		};
+		self['getVal']=function(){
+			return isset(self.data) ? self.data : self.defaultNull;
+		};
+		return self;
+	}
+	window['c']['emulator']=function(){
+		var self = Object.create(null);
+		self.scope=Scope();
+		self['emulate']=function(arr){
+			for(var i=0;i<arr['length'];i++){
+				if(isset(arr[i] && isset(arr[i]['htmlText'])){
+					console.log([arr[i], arr[i]['htmlText']);
+					var r=window['Blocks']['evaluate'](arr[i],arr[i]['htmlText'],arr,i);
 					if(r==="cancel-execution")return;
+					//maybe add some other stuff here?
 				}
 			}
-		}
-	};
-	this.getShiftedEmulatable=function(emulatable, shift){
-		var arr={};
-		for(var i=shift;i<emulatable.length;i++){
-			arr[i-shift]=emulatable[i];
-		}
-		return arr;
-	};
-	this.requestVar=function(varname){
-		return Variable(this.scope.getVar(varname));
-	};
-	this.getVars=function(){
-		return this.scope.vars;
-	};
-	this.emulateStack=function(stackName){
-		var stack=Stack.emulatable(Stack.call(stackName));
-		console.log('emulating');
-		this.emulate(stack);
-	};	
-	this.attempt=function(fn){
-		if(typeof fn === 'function'){
-			return fn();
-		}else if(typeof fn !== 'undefined'){
-			return fn;
-		}else{
+		};
+		self['getShiftedEmulatable']=function(emulatable, shift){
+			var arr={};
+			for(var i=shift;i<emulatable['length'];++i){
+				arr[i-shift]=emulatable[i];
+			}
+			return arr;
+		};
+		self['requestVar']=function(varname){
+			return window['Variable'](self.scope['getVar'](varname));
+		};
+		self['getVars']=function(){
+			return self.scope.vars;
+		};
+		self['emulateStack']=function(stackName){
+			var stack=window['Stack']['emulatable'](window['Stack']['call'](stackName));
+			console.log('emulating');
+			self['emulate'](stack);
+		};	
+		self['attempt']=function(fn){
+			if(typeof fn === 'function'){
+				return fn();
+			}else if(typeof fn !== 'undefined'){
+				return fn;
+			}else{
+				return null;
+			}
+		};
+		//TODO: finish
+		self['regexitize']=function(text, regex){
+			var obj=new RegExp();
 			return null;
-		}
+		};
+		return self;
 	};
-	this.regexitize=function(text, regex){
-		var obj=new RegExp();
-		
-		return null;
-	};
-	return this;
+	window['Emulator']=window['c']['emulator']();		
 }
-Emulator=protoEmulator();		
 if(logging)console.log('Emulator initiated');
