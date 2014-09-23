@@ -21,12 +21,12 @@ StringInputPrototype.attributeChangedCallback = function() {
 	if(isset($(this).data('value'))){
 		console.log('data');
 		this.textContent = "["+$(this).data('value')+"]";
+	}else if($(this).attr('value') !== void(0)){
+		this.textContent = "["+$(this).attr('value')+"]";
 	}else{
-		if($(this).attr('value') !== void(0)){
-			this.textContent = "["+$(this).attr('value')+"]";
-		}else{
-			$(this).attr('value', defaults.stringInputValue);//calls function again, setting the text
-		}
+		this.textContent="["+defaults.stringInputValue+"]";
+		$(this).attr('placeholder', defaults.stringInputValue);//calls function again, setting the text
+	}
 	}
 	if(isset($(this).attr('data-accept'))){
 		$(this).droppable();
@@ -34,12 +34,12 @@ StringInputPrototype.attributeChangedCallback = function() {
 	$(this).on('click', function(){
 		if($(this).html().contains('<input'))return;
 		if(logging)console.log('Event registered: string-input clicked');
-  		var a=$('<input />').attr('type', 'text').attr('value', $(this).attr('value')).addClass('StringInput-tb');//create textbox
+  		var a=$('<input />').attr('type', 'text').attr('placeholder',$(this).attr('placeholder')).attr('value', $(this).attr('value')).addClass('StringInput-tb');//create textbox
   		$(this).html('[').append(a);//insert textbox
   		$(this).html($(this).html()+']');//add ']' for l&f
   		//handles handles textboxes
   		var strInput=$('.StringInput-tb').focusout(function(){
-  			if(logging)console.log('Registered event: fosusing out of string-input textbox');
+  			if(typeof logging!=='undefined')console.log('Registered event: fosusing out of string-input textbox');
   			$(this).parent().attr('value', '')//clears the attribute, so that the attributeChangedCallback is called
   			.delay(5).attr('value', $(this).val());//sets the value to the data
   			$(this).remove();//removes self, cleans up

@@ -1,7 +1,7 @@
 window['protoStacks']=function(){
 	var stack=Object.create(null);
 	stack.stacks=$('.stack');
-	stack.fix=function(){
+	stack['fix']=function(){
 		for(var i=0;i<$('.stack').length;i++){
 			if($('.stack').eq(i).find('ul').length<1){
 				$('.stack').eq(i).append($('<ul></ul>'));
@@ -70,13 +70,13 @@ window['protoStacks']=function(){
 			}
 		return this;
 	};
-	stack.create=function(px,py,top,callString){
+	stack['create']=function(px,py,top,callString){
 		var stack=$('<ul></ul>').addClass('stack').addClass('stack-sortable')
 			.attr('style', 'position:fixed;top:'+ py + 'px;left:'+px+'px;')
 			.data('callStr', callString);
 		$('.canvas').eq(0).append(stack);
 		stack.html('<center class="stack-handle">'+ top +'</center>');
-		Stack.fix();
+		window['Stack']['fix']();
 		return stack;
 	};
 	stack.update=function(){
