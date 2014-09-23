@@ -1,5 +1,5 @@
 function protoStacks(){
-	var stack=Object.create();
+	var stack=Object.create(null);
 	stack.stacks=$('.stack');
 	stack.fix=function(){
 		for(var i=0;i<$('.stack').length;i++){
