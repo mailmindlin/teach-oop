@@ -1,6 +1,6 @@
 {
 	if(window['c']===void 0)window['c']=Object.create(null);
-	function isset(o){return void(0)!==o;}
+	function isset(o){return void 0!==o;}
 	window['Scope']=function(scope){
 		var self = Object.create(null);
 		self.vars=isset(scope) ? scope.vars : new Array();//another ternary operator FOR THE WIN
