@@ -1,4 +1,4 @@
-function protoStacks(){
+window['protoStacks']=function(){
 	var stack=Object.create(null);
 	stack.stacks=$('.stack');
 	stack.fix=function(){
@@ -27,11 +27,14 @@ function protoStacks(){
 				if((!$(e.currentTarget).hasClass('stack')))return;
 				e.preventDefault();
 				$(e.currentTarget).append($('<custom-menu></custom-menu>').attr('style', 'position:fixed;z-index:99;top:' + e.clientY + ';left:'+ e.clientX + ';').html('<cmenu-item is="li" type="emulate">Emulate</cmenu-item><cmenu-item type="delete">Delete</cmenu-item>').disableSelection());
-			}).accordion({
+			})
+		try{
+			$('.stack').accordion({
 				collapsable: true,
 				heightStyle: "content",
 				icons: {header: "ui-icon-circle-plus-thick", activeHeader: "ui-icon-circle-minus-thick"}
 			});
+		}catch(e){console.log('error with accordion.');}
 			//attaches stuff to handle
 			$('.stack-handle').dblclick(function(ev, ui){
 			 	//rename thing
@@ -101,5 +104,6 @@ function protoStacks(){
 	stack.fix();//fixes stacks
 	return stack;
 }
-window['Stack']=protoStacks();
+console.log("ititializing stack...");
+window['Stack']=window['protoStacks']();
 if(logging)console.log('Stacks initiated');
