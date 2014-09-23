@@ -28,12 +28,12 @@ window['protoStacks']=function(){
 				e.preventDefault();
 				$(e.currentTarget).append($('<custom-menu></custom-menu>').attr('style', 'position:fixed;z-index:99;top:' + e.clientY + ';left:'+ e.clientX + ';').html('<cmenu-item is="li" type="emulate">Emulate</cmenu-item><cmenu-item type="delete">Delete</cmenu-item>').disableSelection());
 			})
-		/*try{
+		try{
 			$('.stack').accordion({
 				collapsable: true,
 				heightStyle: "content",
 				icons: {header: "ui-icon-circle-plus-thick", activeHeader: "ui-icon-circle-minus-thick"}
-			});*/
+			});
 		}catch(e){console.log('error with accordion.');}
 			//attaches stuff to handle
 			$('.stack-handle').dblclick(function(ev, ui){
