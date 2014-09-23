@@ -35,7 +35,7 @@
 		self.scope=Scope();
 		self['emulate']=function(arr){
 			for(var i=0;i<arr['length'];i++){
-				if(isset(arr[i] && isset(arr[i]['htmlText'])){
+				if(isset(arr[i]) && isset(arr[i]['htmlText'])){
 					console.log([arr[i], arr[i]['htmlText']);
 					var r=window['Blocks']['evaluate'](arr[i],arr[i]['htmlText'],arr,i);
 					if(r==="cancel-execution")return;
