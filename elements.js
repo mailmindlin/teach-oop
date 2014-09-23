@@ -22,7 +22,7 @@ StringInputPrototype.attributeChangedCallback = function() {
 		console.log('data');
 		this.textContent = "["+$(this).data('value')+"]";
 	}else{
-		if(typeof $(this).attr('value') !== 'undefined'){
+		if($(this).attr('value') !== void(0)){
 			this.textContent = "["+$(this).attr('value')+"]";
 		}else{
 			$(this).attr('value', defaults.stringInputValue);//calls function again, setting the text
@@ -75,7 +75,7 @@ CustomMenuItemPrototype.createdCallback=function(){
 			var el=$(this);
 			var i=0;
 			var targClass='stack';
-			if(typeof $(this).attr('target') !== 'undefined'){targClass=$(this).attr('target');}
+			if($(this).attr('target') !== void(0)){targClass=$(this).attr('target');}
 			while(!el.hasClass(targClass)){
 				el=el.parent();
 				if(i>5){console.log('error');return;}
@@ -90,7 +90,7 @@ CustomMenuItemPrototype.createdCallback=function(){
 			console.log('hi'+el.attr('class'));
 			var i=0;
 			var targClass='stack';
-			//if((typeof $(this).attr('target') !== 'undefined')&&($(this).attr('target')!=="")){targClass=$(this).attr('target');}
+			//if(($(this).attr('target') !== void(0))&&($(this).attr('target')!=="")){targClass=$(this).attr('target');}
 			while(! el.hasClass(targClass)){
 				el=el.parent();
 				if(i>5){console.err('error, ' + targClass);return;}
@@ -101,7 +101,7 @@ CustomMenuItemPrototype.createdCallback=function(){
 	}
 }
 var CustomMenuItem=document.registerElement('cmenu-item', {prototype:CustomMenuItemPrototype});
-if(logging)console.log('Elements initiated');
+if(void(0) !== logging)console.log('Elements initiated');
 
 //adaptable input (not yet used)
 var AdaptableInputPrototype = Object.create(HTMLElement.prototype);
@@ -112,7 +112,7 @@ AdaptableInputPrototype.createdCallback = function() {
 }
 AdaptableInputPrototype.attributeChangedCallback = function() {
 	if(logging)console.log('updating');
-	if(typeof $(this).attr('value') !== 'undefined'){
+	if($(this).attr('value') !== void(0)){
 		this.textContent = "["+$(this).attr('value')+"]";
 	}else{
 		$(this).attr('value', defaults.stringInputValue);//calls function again, setting the text

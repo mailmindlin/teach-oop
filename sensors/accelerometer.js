@@ -1,5 +1,5 @@
 function AccelerometerConstructor(){
-	var self=Object.create();
+	var self=Object.create(null);
 	self.x=0;
 	self.y=0;
 	self.z=0;

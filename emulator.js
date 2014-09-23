@@ -64,7 +64,7 @@
 		self['attempt']=function(fn){
 			if(typeof fn === 'function'){
 				return fn();
-			}else if(typeof fn !== 'undefined'){
+			}else if(isset(fn)){
 				return fn;
 			}else{
 				return null;
