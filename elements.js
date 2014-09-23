@@ -27,7 +27,6 @@ StringInputPrototype.attributeChangedCallback = function() {
 		this.textContent="["+defaults.stringInputValue+"]";
 		$(this).attr('placeholder', defaults.stringInputValue);//calls function again, setting the text
 	}
-	}
 	if(isset($(this).attr('data-accept'))){
 		$(this).droppable();
 	}
