@@ -33,8 +33,8 @@ window['protoStacks']=function(){
 				collapsable: true,
 				heightStyle: "content",
 				icons: {header: "ui-icon-circle-plus-thick", activeHeader: "ui-icon-circle-minus-thick"}
-			});*/
-		}catch(e){console.log('error with accordion.');}
+			});
+		}catch(e){console.log('error with accordion.');}*/
 			//attaches stuff to handle
 			$('.stack-handle').dblclick(function(ev, ui){
 			 	//rename thing
