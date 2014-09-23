@@ -1,59 +1,59 @@
-var AccelerometerConstruct;
 function AccelerometerConstructor(){
-	this.x=0;
-	this.y=0;
-	this.z=0;
-	this.xGrav=0;
-	this.yGrav=0;
-	this.zGrav=0;
-	this.hasGrav=false;
-	this.hasAccel=false;
-	this.update=function(event, type){
+	var self=Object.create();
+	self.x=0;
+	self.y=0;
+	self.z=0;
+	self.xGrav=0;
+	self.yGrav=0;
+	self.zGrav=0;
+	self.hasGrav=false;
+	self.hasAccel=false;
+	self.update=function(event, type){
 		console.log('updating Accelerometer');
 		if(type==1){
-			this.x=event.beta;
-			this.y=event.gamma;
-			this.z=event.alpha;
+			self.x=event.beta;
+			self.y=event.gamma;
+			self.z=event.alpha;
 		}else if(type==2){
-			this.x=event.acceleration.x*2;
-			this.y=event.acceleration.y*2;
-			this.x=event.acceleration.z*2;
-			this.xGrav=event.accelerationIncludingGravity.x*2;
-			this.yGrav=event.accelerationIncludingGravity.y*2;
-			this.zGrav=event.accelerationIncludingGravity.z*2;
+			self.x=event.acceleration.x*2;
+			self.y=event.acceleration.y*2;
+			self.x=event.acceleration.z*2;
+			self.xGrav=event.accelerationIncludingGravity.x*2;
+			self.yGrav=event.accelerationIncludingGravity.y*2;
+			self.zGrav=event.accelerationIncludingGravity.z*2;
 		}else if(type==2){
-			this.x=event.x*50;
-			this.y=event.y*50;
-			this.z=event.z*50;
+			self.x=event.x*50;
+			self.y=event.y*50;
+			self.z=event.z*50;
 		}
-		if(this.z==null)this.z=0;
+		if(self.z==null)self.z=0;
 	};
-	return this;
+	if (window.DeviceOrientationEvent) {
+		console.log('1');
+    	window.addEventListener("deviceorientation", function () {
+    	    self.update(event,1);
+    	}, true);
+    	self.hasAccel=true;
+	}
+	if (window.DeviceMotionEvent) {
+		console.log('2');
+	    window.addEventListener('devicemotion', function () {
+	        self.update(event,2);
+	    }, true);
+	    window.DeviceMoionEvent=function(e){self.update(e,2);};
+	    self.hasAccel=true;
+	    self.hasGrav=true;
+	}
+	if(window.MozOrientationEvent) {
+		console.log('3');
+	    window.addEventListener("MozOrientation", function () {
+	        self.update(orientation,3);
+	    }, true);
+	    AccelerometerConstruct.hasAccel=true;
+	}
+	return self;
 }
-AccelerometerConstruct=AccelerometerConstructor();
-/*if (window.DeviceOrientationEvent) {
-	console.log('1');
-    window.addEventListener("deviceorientation", function () {
-        AccelerometerConstruct.update(event,1);
-    }, true);
-    AccelerometerConstruct.hasAccel=true;
-}
-if (window.DeviceMotionEvent) {
-	console.log('2');
-    window.addEventListener('devicemotion', function () {
-        AccelerometerConstruct.update(event,2);
-    }, true);
-    window.DeviceMoionEvent=function(e){console.log('updated');AccelerometerConstruct.update(e,2);};
-    AccelerometerConstruct.hasAccel=true;
-    AccelerometerConstruct.hasGrav=true;
-}
-if(window.MozOrientationEvent) {
-	console.log('3');
-    window.addEventListener("MozOrientation", function () {
-        AccelerometerConstruct.update(orientation,3);
-    }, true);
-    AccelerometerConstruct.hasAccel=true;
-}*/
+window['AccelerometerConstruct']=AccelerometerConstructor();
 function devOrient(e){
 	if(logging)console.log('Checking')
 	AccelerometerConstruct.x=e.gamma;
@@ -79,3 +79,4 @@ if (window.DeviceOrientationEvent) {
 }else if (window.DeviceMotionEvent) {
   window.addEventListener('devicemotion', devMotion, false);
 }
+console.log('Accelerometer initialized');
