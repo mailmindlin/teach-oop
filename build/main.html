@@ -27,7 +27,7 @@
 		<script type="text/javascript" src="elements.js"></script>
 		<link rel="stylesheet" type="text/css" href="main.css"/>
 	</head>
-	<body onload="load()">
+	<body onload="(typeof load!=='undefined')&&load()">
 		<video autoplay class='hide' id='webcamVideo'></video>
 		<div id="objects" style="position:fixed; top:0px; left:0px; z-index:99">
 			<ul class='stack-selectable'>

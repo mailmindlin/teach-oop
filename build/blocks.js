@@ -140,6 +140,6 @@ Blocks.registerNew({name:"cameraInitiator", text:"start camera", type:'camera', 
 Blocks.registerNew({name:"html5CameraStart", text:"Start camera with HTML5", type:'camera', call: function(){ webcam.init(); }});
 Blocks.registerNew({name:"callFn", text:"Call @TEXTPARAM", type:'paramTester', call: function(tparam,tp1){ Emulator.emulateStack(tp1);}});
 Blocks.registerNew({name:"stop",text:"Stop",type:"native-function",call:function(){return 'cancel-execution';}, desc: "Stops the execution of the stack."});
-Blocks.registerNew({name:"delay",text:"wait for @TEXTPARAM seconds",type:'paramTester',call: function(a,b,e,i){var f=Emulator.getShiftedEmulatable(e,parseInt(i));setInterval(function(){Emulator.emulate(f);},parseInt(i));return 'cancel-execution';}, desc="Pauses stack emulation for the given number of seconds."});
-Blocks.registerNew({name:"save_var",text:"save @VARNAME as @STRING",type:'variable',call:function(tparam, tp1){setCookie(tp1['VALUE'][0],Emulator.scope.vars[tp1['VARNAME'][0]],90)},desc="Saves the given variable under a cookie with the given name."});
+Blocks.registerNew({name:"delay",text:"wait for @TEXTPARAM seconds",type:'paramTester',call: function(a,b,e,i){var f=Emulator.getShiftedEmulatable(e,parseInt(i));setInterval(function(){Emulator.emulate(f);},parseInt(i));return 'cancel-execution';}, desc:"Pauses stack emulation for the given number of seconds."});
+Blocks.registerNew({name:"save_var",text:"save @VARNAME as @STRING",type:'variable',call:function(tparam, tp1){setCookie(tp1['VALUE'][0],Emulator.scope.vars[tp1['VARNAME'][0]],90)},desc:"Saves the given variable under a cookie with the given name."});
 if(logging)console.log('Blocks initiated');

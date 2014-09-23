@@ -101,7 +101,7 @@ CustomMenuItemPrototype.createdCallback=function(){
 	}
 }
 var CustomMenuItem=document.registerElement('cmenu-item', {prototype:CustomMenuItemPrototype});
-if(void(0) !== logging)console.log('Elements initiated');
+if(typeof logging !== 'undefined')console.log('Elements initiated');
 
 //adaptable input (not yet used)
 var AdaptableInputPrototype = Object.create(HTMLElement.prototype);
