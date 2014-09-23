@@ -1,6 +1,6 @@
 {
 	if(window['c']===void 0)window['c']=Object.create(null);
-	function isset(o){return void(0)!==o;}
+	function isset(o){return void 0!==o;}
 	window['Scope']=function(scope){
 		var self = Object.create(null);
 		self.vars=isset(scope) ? scope.vars : new Array();//another ternary operator FOR THE WIN
@@ -36,7 +36,7 @@
 		self['emulate']=function(arr){
 			for(var i=0;i<arr['length'];i++){
 				if(isset(arr[i]) && isset(arr[i]['htmlText'])){
-					console.log([arr[i], arr[i]['htmlText']);
+					console.log([arr[i], arr[i]['htmlText']]);
 					var r=window['Blocks']['evaluate'](arr[i],arr[i]['htmlText'],arr,i);
 					if(r==="cancel-execution")return;
 					//maybe add some other stuff here?
