@@ -36,10 +36,11 @@ window['protoStacks']=function(){
 			});
 		}catch(e){console.log('error with accordion.');}*/
 			//attaches stuff to handle
+// 			$('.stack-handle').attr('contenteditible','true');//WIP:better interface w/ typed code
 			$('.stack-handle').dblclick(function(ev, ui){
 			 	//rename thing
 				$(this).html('<input class="stack-tb-rename" type="text"/>');
-				$('.stack-tb-rename').attr('value', $(this).parent().data('callStr')).focus()
+				$('.stack-tb-rename').attr('value', $(this).parent().data('callStr')).select().focus()
 					.focusout(
 						function(){
 							$(this).parent().parent().data('callStr', $(this).val());

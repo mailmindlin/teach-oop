@@ -7,8 +7,6 @@ function protoBlocks(){
 	blocks.registeredTypes=new Array();
 	blocks.metaTypes=new Array();
 	blocks.init=function(){
-		//this.metaTypes['fn']={name='fn'};
-		//this.metaTypes[''];
 		for(var i=0;i<this.registeredBlocks.length;i++){
 			var parsedText=this.registeredBlocks[i].text;
 			var hasValidType=isset(this.registeredTypes[this.registeredBlocks[i].type]);
@@ -102,11 +100,8 @@ Blocks:
 	required fields: (String)name, (String)text, (function)call
 	optional fields: (String)type, (String)desc
 */
-Blocks.registerType({name:'native-function', defaultClass: 'block-type-fn'});
-Blocks.registerNew({name:"popupHi", text:"popup 'hi'", call:function(){alert("hi");}, type:'native-function'});
-Blocks.registerNew({name:"logHi", text:"Log hi", call:function(){console.log('hi');}, type:'native-function'});
-Blocks.registerNew({name:"parseTest", text:"Alert @TEXTPARAM", type:'paramTester', call:function(tparam, tp1){alert(tp1);}});
-Blocks.registerType({name:'paramTester', defaultClass: 'block-type-fn', textParser: function(block){return block.text.replace("@TEXTPARAM", "<string-input/>");}, paramParser:function(text){
+//register types
+Blocks.registerType({name:'native-function', defaultClass: 'block-type-fn', textParser: function(block){return block.text.replace("@TEXTPARAM", "<string-input/>");}, paramParser:function(text){
 	var regex=/value=["'][\w\s-:\.,!@#]+["']/g;
 	var arr=text.match(regex);
 	for(key in arr){
@@ -115,31 +110,32 @@ Blocks.registerType({name:'paramTester', defaultClass: 'block-type-fn', textPars
 	return fixVal(arr[0]);
 	}});
 Blocks.registerType({name:'variable', standalone:true, defaultClass: 'block-type-variable',
-textParser: function(block){return block.text.replace("variable @VARNAME", "<string-input value='variable' name='varname'></string-input>").replace("@VARSELECT", "<variable-selector/>").replace("value @STRING", "<string-input value='value' name='value'></string-input>");},
-paramParser: function(string){
-	var regexValue=/value=["'][\w\s-:\.,!@#]+["'](?= name=['"]value['"])/g;
-	var regexVarName=/value=["'][\w\s-:\.,!@#]+["'](?= name=['"]varname['"])/g;
-	var val=string.match(regexValue);
-	var nam=string.match(regexVarName);
-	for(key in val){
-		val[key]=val[key].substring(7, val[key].length-1);
-	}
-	for(key in nam){
-		nam[key]=nam[key].substring(7, nam[key].length-1);
-	}
-	var arr=new Array();
-	arr['VARNAME']=nam;
-	arr['VALUE']=val;
-	return arr;
-}
-});
-Blocks.registerNew({name:'varCreator', text:'Set variable @VARNAME to value @STRING', type:'variable', call:function(tparam, tp1){Emulator.scope.vars[tp1['VARNAME'][0]]=tp1['VALUE'][0];}});
-//camera blocks
+	textParser: function(block){return block.text.replace("variable @VARNAME", "<string-input value='variable' name='varname'></string-input>").replace("@VARSELECT", "<variable-selector/>").replace("value @STRING", "<string-input value='value' name='value'></string-input>");},
+	paramParser: function(string){
+		var regexValue=/value=["'][\w\s-:\.,!@#]+["'](?= name=['"]value['"])/g;
+		var regexVarName=/value=["'][\w\s-:\.,!@#]+["'](?= name=['"]varname['"])/g;
+		var val=string.match(regexValue);
+		var name=string.match(regexVarName);
+		for(key in val)
+			val[key]=val[key].substring(7, val[key].length-1);
+		for(key in name)
+			name[key]=name[key].substring(7, name[key].length-1);
+		var arr=new Array();
+		arr['VARNAME']=name;
+		arr['VALUE']=val;
+		return arr;
+	}});
 Blocks.registerType({name:"camera", defaultClass: 'block-type-camera'});
-Blocks.registerNew({name:"cameraInitiator", text:"start camera", type:'camera', call: function(){ Camera.init();}});
-Blocks.registerNew({name:"html5CameraStart", text:"Start camera with HTML5", type:'camera', call: function(){ webcam.init(); }});
-Blocks.registerNew({name:"callFn", text:"Call @TEXTPARAM", type:'paramTester', call: function(tparam,tp1){ Emulator.emulateStack(tp1);}});
+//register blocks
+Blocks.registerNew({name:"log", text:"log @TEXTPARAM ", call:function(){console.log('hi');}, type:'native-function'});
+Blocks.registerNew({name:"parseTest", text:"Alert @TEXTPARAM", type:'native-function', call:function(tparam, tp1){alert(tp1);}});
+Blocks.registerNew({name:"callFn", text:"Call @TEXTPARAM", type:'native-function', call: function(tparam,tp1){ Emulator.emulateStack(tp1);}});
 Blocks.registerNew({name:"stop",text:"Stop",type:"native-function",call:function(){return 'cancel-execution';}, desc: "Stops the execution of the stack."});
-Blocks.registerNew({name:"delay",text:"wait for @TEXTPARAM seconds",type:'paramTester',call: function(a,b,e,i){var f=Emulator.getShiftedEmulatable(e,parseInt(i));setInterval(function(){Emulator.emulate(f);},parseInt(i));return 'cancel-execution';}, desc:"Pauses stack emulation for the given number of seconds."});
-Blocks.registerNew({name:"save_var",text:"save @VARNAME as @STRING",type:'variable',call:function(tparam, tp1){setCookie(tp1['VALUE'][0],Emulator.scope.vars[tp1['VARNAME'][0]],90)},desc:"Saves the given variable under a cookie with the given name."});
+Blocks.registerNew({name:"delay",text:"wait for @TEXTPARAM seconds",type:'native-function',call: function(a,b,e,i){var f=Emulator.getShiftedEmulatable(e,parseInt(i));setInterval(function(){Emulator.emulate(f);},parseInt(i));return 'cancel-execution';}, desc:"Pauses stack emulation for the given number of seconds."});
+//camera blocks
+// Blocks.registerNew({name:"cameraInitiator", text:"Start camera", type:'camera', call: function(){ Camera.init();}});//old ScriptCam block
+Blocks.registerNew({name:"html5CameraStart", text:"Start camera with HTML5", type:'camera', call: function(){ webcam.init(); }});
+Blocks.registerNew({name:"saveVar",	text:"Save variable @VARNAME to value @STRING",	type:'variable',	call:function(tparam, tp1){setCookie(tp1['VALUE'][0],Emulator.scope.vars[tp1['VARNAME'][0]],90)},desc:"Saves the given variable under a cookie with the given name."});
+Blocks.registerNew({name:"loadVar",	text:"Load variable @VARNAME from value @STRING",	type:'variable',	call:function(tparam, tp1){},desc:"Loads a variable from the specified cookie."});
+Blocks.registerNew({name:'varCreator',	text:'Set variable @VARNAME to value @STRING',	type:'variable',	call:function(tparam, tp1){Emulator.scope.vars[tp1['VARNAME'][0]]=tp1['VALUE'][0];},desc:"Sets a variable to a value."});
 if(logging)console.log('Blocks initiated');

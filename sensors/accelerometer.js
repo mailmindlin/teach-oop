@@ -55,7 +55,7 @@ function AccelerometerConstructor(){
 }
 window['AccelerometerConstruct']=AccelerometerConstructor();
 function devOrient(e){
-	if(typeof logging!=='undefined')console.log('Checking')
+	if(typeof logging!=='undefined'&&logging)console.log('Checking')
 	AccelerometerConstruct.x=e.gamma;
 	AccelerometerConstruct.y=event.beta;
 	AccelerometerConstruct.z=event.alpha;

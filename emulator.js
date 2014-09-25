@@ -77,6 +77,11 @@
 		};
 		return self;
 	};
-	window['Emulator']=window['c']['emulator']();		
+	//new emulator that converts js into 
+	window['c']['_emulator']=function() {
+		var self = Object.create(null);
+		self['emulate']
+	};
+	window['Emulator']=window['c']['emulator']();	
 }
 if(logging)console.log('Emulator initiated');

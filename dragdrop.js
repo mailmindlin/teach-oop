@@ -34,7 +34,8 @@ function findPos(obj) {
 	
 function createStack(e, ui){
 	//console.log(ui);
-	Stack.create(ui.position.left, ui.position.top, "generated", "generated");
+	var name = $('.stack').length==0?"main":"function";
+	Stack.create(ui.position.left, ui.position.top, "main", "main");
 }
 function setCookie(cname,cvalue,exdays){
 	var d = new Date();
