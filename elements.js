@@ -1,6 +1,6 @@
-//my code
 var defaults=new Array();
 defaults.stringInputValue='Enter Some Text';
+
 var StringInputPrototype = Object.create(HTMLElement.prototype);
 StringInputPrototype.createdCallback=function(){
 	if(logging)console.log('created');

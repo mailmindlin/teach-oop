@@ -80,8 +80,9 @@
 	//new emulator that converts js into 
 	window['c']['_emulator']=function() {
 		var self = Object.create(null);
-		self['emulate']
-	};
-	window['Emulator']=window['c']['emulator']();	
+		self['emulate']=function() {
+			
+		};
+	};	
 }
 if(logging)console.log('Emulator initiated');

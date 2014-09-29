@@ -1,5 +1,10 @@
-var logging=false;
+window['logging']=false;
 function load(){
+	if(logging)console.log('Instantiating...');
+	window['Emulator']=window['c']['emulator']();
+	window['Stack']=window['c']['stack']();
+	window['Windows']=window['c']['windows']();
+	if(logging)console.log('\tDone.');
 	$('.bModal').remove();
 	$('#visas_style_div').remove();
 	if(logging)console.log('Loading: Blocks');
@@ -10,11 +15,10 @@ function load(){
 	$('.createStack').draggable({helper:'clone', appendTo: '.canvas', stop: createStack}).disableSelection();
 	if(logging)console.log('Loading: Stacks');
 	$('body>div').bind('dragstart', function(e,ui){e.stopPropagation();});
-	window['Stack']=protoStacks();
 	Data.refresh();
 	loadFromCookie();
 	$('.bModal').remove();
-	$('#visas_style_div').remove();
+	$('#visas_style_div').remove();//adblock
 	if(logging)console.log('done');
 }
 String.prototype.contains=function(test){return this.indexOf(test)>=0;};

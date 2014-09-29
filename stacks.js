@@ -1,4 +1,5 @@
-window['protoStacks']=function(){
+if(window['c']===void 0)window['c']=Object.create(null);
+window['c']['stack']=function(){
 	var stack=Object.create(null);
 	stack.stacks=$('.stack');
 	stack['fix']=function(){
@@ -59,17 +60,17 @@ window['protoStacks']=function(){
 			}*/
 			//trashcan stuff
 			{
-			$('#trash img').addClass('stack-sortable')//allow it to recieve elements
-				.sortable({
-					items:'li:not(.placeholder), ul.stack',
-					update: function(event, ui) {
+			$('#trash img')['addClass']('stack-sortable')//allow it to recieve elements
+				['sortable']({
+					'items':'li:not(.placeholder), ul.stack',
+					'update': function(event, ui) {
 						if(logging)console.log('DELETING BLOCK: ' + ui.item.data('name'));
 						$(this).children().remove();
 					},
 					connectWith: '.stack-sortable'
 				}).disableSelection();
 			}
-		return this;
+		return stack;
 	};
 	stack['create']=function(px,py,top,callString){
 		var stack=$('<ul></ul>').addClass('stack').addClass('stack-sortable')
@@ -81,11 +82,11 @@ window['protoStacks']=function(){
 		return stack;
 	};
 	stack.update=function(){
-		this.stacks=$('.stack');
-		return this;
+		stack.stacks=$('.stack');
+		return stack;
 	};
 	stack.call=function(string){
-		for(var i=0;i<this.update().stacks.length;i++){
+		for(var i=0;i<stack['update']().stacks.length;i++){
 			if($('.stack').eq(i).data('callStr')==string){
 				return $('.stack').eq(i);
 			}
@@ -105,6 +106,4 @@ window['protoStacks']=function(){
 	stack.fix();//fixes stacks
 	return stack;
 }
-console.log("ititializing stack...");
-window['Stack']=window['protoStacks']();
 if(logging)console.log('Stacks initiated');
