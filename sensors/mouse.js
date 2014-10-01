@@ -4,12 +4,12 @@ document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLo
 function superMouse(){
 	var mouse=new Object();
 	mouse.listening=false;
-	mouse['exists']=function(){
+	mouse['exists]'=function(){
 		return document.webkit
 	};
 	mouse['initLock']=function(element){
 		//establish standards
-		element['requestPointerLock'] = element['requestPointerLock'] || element['mozRequestPointerLock'] || element['webkitRequestPointerLock'];
+		element.requestPointerLock = element['requestPointerLock'] || element['mozRequestPointerLock'] || element['webkitRequestPointerLock]';
 		element.requestPointerLock();
 		if(!mouse.listening)mouse.applyListeners();
 	};
