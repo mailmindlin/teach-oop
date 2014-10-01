@@ -4,7 +4,7 @@ function DataConstructor(){
 	data.dataTypes=new Array();
 	data.registerNewType=function(data){
 		if(!(isset(data)&&isset(data.name)))return false;
-		this.dataTypes[data.name]=data;
+		data.dataTypes[data.name]=data;
 		return true;
 	};
 	data.draw=function(block){
@@ -14,13 +14,13 @@ function DataConstructor(){
 	};
 	data.refresh=function(){
 		$('#objects ul .data').remove();
-		for(var dataType in this.dataTypes){
-			this.draw(this.dataTypes[dataType]);
+		for(var dataType in data.dataTypes){
+			data.draw(data.dataTypes[dataType]);
 		}
 		$('.data').draggable().draggable({revert:true});
 	};
 	data.parseString=function(s){
-		for(var dataType in this.dataTypes){
+		for(var dataType in data.dataTypes){
 			s=s.replaceAll(dataType.activeString, dataType.getCurrentValue());
 		}
 		return s;

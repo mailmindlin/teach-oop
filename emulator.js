@@ -81,9 +81,14 @@
 	window['c']['_emulator']=function() {
 		var self = Object.create(null);
 		self['emulate']=function() {
+<<<<<<< HEAD
 		
 		};
 		return self;
+=======
+			
+		};
+>>>>>>> FETCH_HEAD
 	};	
 }
 if(logging)console.log('Emulator initiated');

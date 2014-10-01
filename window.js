@@ -1,7 +1,8 @@
 //window.js
 {
-	function Window(){
-		var windows=new Object();
+	if(window['c']===void 0)window['c']=Object.create(null);
+	window['c']['window']=function(){
+		var windows=Object.create(null);
 		windows.create=function(){
 			$('#window').remove();
 			$('.canvas').append($('<canvas></canvas>').attr('id', 'window'));
@@ -13,10 +14,10 @@
 			return document.querySelector('#window').getContext('2d')
 		};
 		windows.drawImage=function(img, x, y){
-			this.getCtx().drawImage(img, x, y);
+			windows.getCtx().drawImage(img, x, y);
 		};
 		windows.setBackground=function(col){
-			var context=this.getCtx();
+			var context=windows.getCtx();
 			context.beginPath();
 	    	context.rect(188, 50, 200, 100);
 	    	context.fillStyle = col;
@@ -25,5 +26,4 @@
 	    };
 		return windows;
 	};
-	window['Windows']=Window();
 }

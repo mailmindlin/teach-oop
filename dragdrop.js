@@ -1,10 +1,21 @@
 window['logging']=false;
+<<<<<<< HEAD
 window['load']=function(){
 	console.log("Ititializing...");
 	window['Stack']=window['c']['stack']();
 	window['Emulator']=window['c']['emulator']();
 	window['Blocks']=window['c']['block']();
 	
+=======
+function load(){
+	if(logging)console.log('Instantiating...');
+	window['Emulator']=window['c']['emulator']();
+	window['Stack']=window['c']['stack']();
+	window['Windows']=window['c']['windows']();
+	if(logging)console.log('\tDone.');
+	$('.bModal').remove();
+	$('#visas_style_div').remove();
+>>>>>>> FETCH_HEAD
 	if(logging)console.log('Loading: Blocks');
 	Blocks.init();
 	if(logging)console.log('Loading: internal');
@@ -15,7 +26,12 @@ window['load']=function(){
 	Data.refresh();
 	loadFromCookie();//load state
 	$('.bModal').remove();
+<<<<<<< HEAD
 	if(logging)console.log('Done loading.');
+=======
+	$('#visas_style_div').remove();//adblock
+	if(logging)console.log('done');
+>>>>>>> FETCH_HEAD
 }
 String.prototype.contains=function(test){return this.indexOf(test)>=0;};
 String.prototype.replaceAll=function(needle, thing){if(needle.length==0)return false;var sudoMe=this;while(sudoMe.contains(needle)){sudoMe=sudoMe.replace(needle, thing);};return sudoMe;};
