@@ -1,33 +1,33 @@
-var Data;
-function DataConstructor(){
-	var data=new Object();
-	data.dataTypes=new Array();
-	data.registerNewType=function(data){
-		if(!(isset(data)&&isset(data.name)))return false;
-		this.dataTypes[data.name]=data;
+if(window['c']===void 0)window['c']=Object.create(null);
+window['c']['data']=function(){
+	var data=Object.create(null);
+	data['dataTypes']=new Array();
+	data['registerNewType']=function(datatype){
+		if(!(isset(datatype)&&isset(datatype.name)))return false;
+		data['dataTypes'][datatype.name]=datatype;
 		return true;
 	};
-	data.draw=function(block){
+	data['draw']=function(block){
 		if(logging)console.log(block);
 		if(!isset(block))return;
 		$('#objects ul').append(block.instack().addClass('data'));
 	};
-	data.refresh=function(){
+	data['refresh']=function(){
 		$('#objects ul .data').remove();
-		for(var dataType in this.dataTypes){
-			this.draw(this.dataTypes[dataType]);
+		for(var dataType in data.dataTypes){
+			data.draw(data.dataTypes[dataType]);
 		}
 		$('.data').draggable().draggable({revert:true});
 	};
-	data.parseString=function(s){
-		for(var dataType in this.dataTypes){
-			s=s.replaceAll(dataType.activeString, dataType.getCurrentValue());
+	data['parseString']=function(s){
+		for(var dataType in data.dataTypes){
+			s=s['replaceAll'](dataType['activeString'], dataType['getCurrentValue']());
 		}
 		return s;
 	}
 	return data;
 }
-Data=DataConstructor();
+window['c']['data_init']=function(){
 console.log(Data.registerNewType({
 	name:'SensorGyroX',
 	instack: function(){
@@ -70,7 +70,8 @@ Data.registerNewType({
 	type: 'number',
 	getCurtentValue:function(html){return AccelerometerConstruct.z;}
 });//gyro z
-Data.registerNewType({name:'WebcamSnapshot',
+Data.registerNewType({
+	name:'WebcamSnapshot',
 	instack: function(){
 		var me=$('<li></li>').data('name', 'WebcamSnapshot').addClass('data').addClass('camera').html('Image');
 		return me;
@@ -85,3 +86,4 @@ Data.registerNewType({name:'WebcamSnapshot',
 		return webcam.snapshot();
 	}
 });//HTML5 webcam image
+};

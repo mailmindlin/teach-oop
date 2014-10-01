@@ -1,10 +1,10 @@
 if(window['c']===void 0)window['c']=Object.create(null);
 window['c']['Blocks']=function(){
-	var blocks=new Object();
+	var blocks=Object.create(null);
 	//array of registered blocks
 	blocks.registeredBlocks=new Array();
 	//array of registered types
-	blocks.registeredTypes=new Array();
+	blocks['registeredTypes']=new Array();
 	blocks.metaTypes=new Array();
 	blocks.init=function(){
 		for(var i=0;i<this.registeredBlocks.length;i++){
@@ -78,7 +78,7 @@ window['c']['Blocks']=function(){
 }
 //parses complex inputs.
 //Basically fixes sensor references 
-window.fixVal(s){
+window['fixVal']=function(s){
 	//fix sensors
 	var s1=s;
 	s=s.replaceAll("SENSOR:GYRO-X", AccelerometerConstruct.x.toString());
@@ -89,7 +89,7 @@ window.fixVal(s){
 	s=s.replaceAll("SENSOR:GRAV-Z", AccelerometerConstruct.zGrav.toString());
 	if(logging==true||logging>=1)console.log([s1,s]);
 	return s;
-}
+};
 /*
 Block/type definitions:
 Types:
@@ -100,7 +100,7 @@ Blocks:
 	optional fields: (String)type, (String)desc
 */
 //register types
-window['c']['_init']=function(){
+window['c']['block_init']=function(){
 Blocks.registerType({name:'native-function', defaultClass: 'block-type-fn', textParser: function(block){return block.text.replace("@TEXTPARAM", "<string-input/>");}, paramParser:function(text){
 	var regex=/value=["'][\w\s-:\.,!@#]+["']/g;
 	var arr=text.match(regex);
