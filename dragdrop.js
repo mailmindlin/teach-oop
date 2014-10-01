@@ -1,21 +1,21 @@
-var logging=false;
-function load(){
-	$('.bModal').remove();
-	$('#visas_style_div').remove();
+window['logging']=false;
+window['load']=function(){
+	console.log("Ititializing...");
+	window['Stack']=window['c']['stack']();
+	window['Emulator']=window['c']['emulator']();
+	window['Blocks']=window['c']['block']();
+	
 	if(logging)console.log('Loading: Blocks');
 	Blocks.init();
 	if(logging)console.log('Loading: internal');
 	//$('.block-inlist').draggable({helper:'clone', appendTo:'body'}).disableSelection();
 	$('#objects ul').sortable({connectWith: '.stack-sortable', revert:100, remove:function(){Blocks.draw();Data.refresh();}});
 	$('.createStack').draggable({helper:'clone', appendTo: '.canvas', stop: createStack}).disableSelection();
-	if(logging)console.log('Loading: Stacks');
 	$('body>div').bind('dragstart', function(e,ui){e.stopPropagation();});
-	window['Stack']=protoStacks();
 	Data.refresh();
-	loadFromCookie();
+	loadFromCookie();//load state
 	$('.bModal').remove();
-	$('#visas_style_div').remove();
-	if(logging)console.log('done');
+	if(logging)console.log('Done loading.');
 }
 String.prototype.contains=function(test){return this.indexOf(test)>=0;};
 String.prototype.replaceAll=function(needle, thing){if(needle.length==0)return false;var sudoMe=this;while(sudoMe.contains(needle)){sudoMe=sudoMe.replace(needle, thing);};return sudoMe;};

@@ -1,4 +1,5 @@
-window['protoStacks']=function(){
+if(window['c']===void 0)window['c']=Object.create(null);
+window['c']['stack']=function(){
 	var stack=Object.create(null);
 	stack.stacks=$('.stack');
 	stack['fix']=function(){
@@ -105,6 +106,4 @@ window['protoStacks']=function(){
 	stack.fix();//fixes stacks
 	return stack;
 }
-console.log("ititializing stack...");
-window['Stack']=window['protoStacks']();
 if(logging)console.log('Stacks initiated');

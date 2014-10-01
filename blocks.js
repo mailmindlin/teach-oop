@@ -1,5 +1,5 @@
-var Blocks;
-function protoBlocks(){
+if(window['c']===void 0)window['c']=Object.create(null);
+window['c']['Blocks']=function(){
 	var blocks=new Object();
 	//array of registered blocks
 	blocks.registeredBlocks=new Array();
@@ -76,10 +76,9 @@ function protoBlocks(){
 	};
 	return blocks;
 }
-Blocks=protoBlocks();
 //parses complex inputs.
 //Basically fixes sensor references 
-function fixVal(s){
+window.fixVal(s){
 	//fix sensors
 	var s1=s;
 	s=s.replaceAll("SENSOR:GYRO-X", AccelerometerConstruct.x.toString());
@@ -101,6 +100,7 @@ Blocks:
 	optional fields: (String)type, (String)desc
 */
 //register types
+window['c']['_init']=function(){
 Blocks.registerType({name:'native-function', defaultClass: 'block-type-fn', textParser: function(block){return block.text.replace("@TEXTPARAM", "<string-input/>");}, paramParser:function(text){
 	var regex=/value=["'][\w\s-:\.,!@#]+["']/g;
 	var arr=text.match(regex);
@@ -139,3 +139,5 @@ Blocks.registerNew({name:"saveVar",	text:"Save variable @VARNAME to value @STRIN
 Blocks.registerNew({name:"loadVar",	text:"Load variable @VARNAME from value @STRING",	type:'variable',	call:function(tparam, tp1){},desc:"Loads a variable from the specified cookie."});
 Blocks.registerNew({name:'varCreator',	text:'Set variable @VARNAME to value @STRING',	type:'variable',	call:function(tparam, tp1){Emulator.scope.vars[tp1['VARNAME'][0]]=tp1['VALUE'][0];},desc:"Sets a variable to a value."});
 if(logging)console.log('Blocks initiated');
+};
+if(logging)console.log('Blocks loaded');
